@@ -6,6 +6,10 @@ export class Welcome {
   lastName = 'Doe';
   previousValue = this.fullName;
 
+  constructor(){
+    alert('welcome')
+  }
+  
   //Getters can't be directly observed, so they must be dirty checked.
   //However, if you tell Aurelia the dependencies, it no longer needs to dirty check the property.
   //To optimize by declaring the properties that this getter is computed from, uncomment the line below
