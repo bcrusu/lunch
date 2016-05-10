@@ -1,5 +1,5 @@
-﻿using System;
-using System.IdentityModel.Tokens;
+﻿using lunch.Configuration;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Jwt;
 using Owin;
 
@@ -12,9 +12,11 @@ namespace lunch.Api.Auth
             var authenticationOptions = new JwtBearerAuthenticationOptions
             {
                 Provider = new ApplicationOAuthBearerAuthenticationProvider(),
-                TokenHandler = new JwtSecurityTokenHandler
+                AuthenticationMode = AuthenticationMode.Active,
+                AllowedAudiences = new[] { JwtHelper.ClientId },
+                IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                 {
-                    TokenLifetimeInMinutes = (int) TimeSpan.FromDays(14).TotalMinutes
+                    new SymmetricKeyIssuerSecurityTokenProvider(JwtHelper.Issuer, ApplicationSettings.JwtSignKey)
                 }
             };
 

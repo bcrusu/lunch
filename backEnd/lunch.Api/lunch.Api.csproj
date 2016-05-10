@@ -166,6 +166,7 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="App_Start\Auth\ApplicationOAuthBearerAuthenticationProvider.cs" />
+    <Compile Include="App_Start\Auth\JwtHelper.cs" />
     <Compile Include="App_Start\Auth\LinkedinUserDetailsProvider.cs" />
     <Compile Include="App_Start\Cors\DefaultCorsPolicyProvider.cs" />
     <Compile Include="App_Start\OwinConfig.cs" />
@@ -215,6 +216,9 @@
       <Project>{4e55719f-4290-4fbd-b1fe-cff86c9300a5}</Project>
       <Name>lunch.Repositories</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Secrets.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

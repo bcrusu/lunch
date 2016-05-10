@@ -1,22 +1,27 @@
-﻿using System.Configuration;
-using System.IO;
+﻿using System;
+using System.Configuration;
 
 namespace lunch.Configuration
 {
     public static class ApplicationSettings
     {
-        private static string _linkedinClientSecret;
+        private static readonly SecretsConfigurationSection Secrets;
+
+        static ApplicationSettings()
+        {
+            Secrets = (SecretsConfigurationSection)ConfigurationManager.GetSection("secrets");
+        }
 
         public static string DefaultAccessControlAllowOrigin => ConfigurationManager.AppSettings["DefaultAccessControlAllowOrigin"];
 
-        public static string LinkedinClientSecret
+        public static string LinkedinClientSecret => Secrets.LinkedinClientSecret.Value;
+
+        public static byte[] JwtSignKey
         {
             get
             {
-                if (_linkedinClientSecret == null)
-                    _linkedinClientSecret = File.ReadAllText(ConfigurationManager.AppSettings["LinkedinClientSecretFileName"]);
-
-                return _linkedinClientSecret;
+                var base64Key = Secrets.JwtSignKey.Value;
+                return Convert.FromBase64String(base64Key);
             }
         }
     }
