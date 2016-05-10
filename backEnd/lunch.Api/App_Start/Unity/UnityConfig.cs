@@ -14,7 +14,7 @@ namespace lunch.Api.Unity
             return container;
         });
 
-        public static IUnityContainer GetConfiguredContainer()
+        public static IUnityContainer GetContainer()
         {
             return Container.Value;
         }

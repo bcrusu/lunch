@@ -1,8 +1,13 @@
-﻿using lunch.Repositories.Security;
+﻿using lunch.Domain.Security;
+using lunch.Repositories.Security;
 
 namespace lunch.Repositories.Impl.Security
 {
-    class UserRepository : IUserRepository
+    internal class UserRepository : RepositoryBase<User, int>, IUserRepository
     {
+        public UserRepository(ApplicationDbContext dbContext)
+            : base(dbContext)
+        {
+        }
     }
 }

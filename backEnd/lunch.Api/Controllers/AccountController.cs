@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using lunch.Api.Auth;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using lunch.Api.Models.Account;
+using lunch.BusinessLogic.Security;
 
 namespace lunch.Api.Controllers
 {
@@ -16,8 +15,13 @@ namespace lunch.Api.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private ApplicationUserManager _userManager;
-        
+        private readonly IExternalUsersBusinessLogic _externalUsersBusinessLogic;
+
+        public AccountController(IExternalUsersBusinessLogic externalUsersBusinessLogic)
+        {
+            _externalUsersBusinessLogic = externalUsersBusinessLogic;
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<IHttpActionResult> LoginLinkedin(LoginLinkedinModel model)
@@ -40,19 +44,6 @@ namespace lunch.Api.Controllers
             return Ok();
         }
 
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
         // GET api/Account/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
@@ -68,23 +59,7 @@ namespace lunch.Api.Controllers
             };
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && _userManager != null)
-            {
-                _userManager.Dispose();
-                _userManager = null;
-            }
-
-            base.Dispose(disposing);
-        }
-
         #region Helpers
-
-        private IAuthenticationManager Authentication
-        {
-            get { return Request.GetOwinContext().Authentication; }
-        }
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {

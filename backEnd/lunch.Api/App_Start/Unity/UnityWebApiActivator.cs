@@ -11,14 +11,13 @@ namespace lunch.Api.Unity
     {
         public static void Start() 
         {
-            var resolver = new UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
+            var resolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetContainer());
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
         }
 
-        /// <summary>Disposes the Unity container when the application is shut down.</summary>
         public static void Shutdown()
         {
-            var container = UnityConfig.GetConfiguredContainer();
+            var container = UnityConfig.GetContainer();
             container.Dispose();
         }
     }

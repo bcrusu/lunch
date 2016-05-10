@@ -1,4 +1,5 @@
-﻿using lunch.Repositories.Impl.Security;
+﻿using lunch.Repositories.Impl;
+using lunch.Repositories.Impl.Security;
 using lunch.Repositories.Security;
 using Microsoft.Practices.Unity;
 
@@ -8,6 +9,7 @@ namespace lunch.Repositories
     {
         public static void RegisterRepositoryTypes(this IUnityContainer container)
         {
+            container.RegisterType<ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserRepository, UserRepository>();
         }
     }

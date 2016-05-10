@@ -1,6 +1,8 @@
-﻿namespace lunch.Repositories.Security
+﻿using lunch.Domain.Security;
+
+namespace lunch.Repositories.Security
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User, int>
     {
     }
 }
