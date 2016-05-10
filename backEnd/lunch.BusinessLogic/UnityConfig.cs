@@ -8,7 +8,8 @@ namespace lunch.BusinessLogic
     {
         public static void RegisterBusinessLogicTypes(this IUnityContainer container)
         {
-            container.RegisterType<IExternalUsersBusinessLogic, ExternalUsersBusinessLogic>();
+            container.RegisterType<IUserBusinessLogic, UserBusinessLogic>();
+            container.RegisterType<IUserSessionBusinessLogic, UserSessionBusinessLogic>();
         }
     }
 }

@@ -180,6 +180,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\LoginResultModel.cs" />
     <Compile Include="Models\Account\LoginLinkedinModel.cs" />
     <Compile Include="Models\Account\UserInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -211,6 +212,10 @@
     <ProjectReference Include="..\lunch.Configuration\lunch.Configuration.csproj">
       <Project>{4E495068-5F09-4C07-A0BC-E5C35AFCBF9F}</Project>
       <Name>lunch.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lunch.Domain\lunch.Domain.csproj">
+      <Project>{CA5C3730-82E3-448D-96C4-61935F444693}</Project>
+      <Name>lunch.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\lunch.Repositories\lunch.Repositories.csproj">
       <Project>{4e55719f-4290-4fbd-b1fe-cff86c9300a5}</Project>

@@ -11,6 +11,7 @@ namespace lunch.Repositories
         {
             container.RegisterType<ApplicationDbContext>(new HierarchicalLifetimeManager());
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IUserSessionRepository, UserSessionRepository>();
         }
     }
 }

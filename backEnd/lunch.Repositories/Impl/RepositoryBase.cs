@@ -17,15 +17,15 @@ namespace lunch.Repositories.Impl
 
         protected DbSet<TEntity> Set { get; private set; }
 
-        public virtual TEntity GetByKey(TKey key)
+        public virtual TEntity FindByKey(TKey key)
         {
             return Set.Find(key);
         }
 
-        public virtual void Add(TEntity entity)
+        public virtual TEntity Add(TEntity entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
-            Set.Add(entity);
+            return Set.Add(entity);
         }
 
         public virtual void Delete(TEntity entity)

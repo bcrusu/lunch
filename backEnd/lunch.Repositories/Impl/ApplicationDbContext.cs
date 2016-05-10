@@ -12,5 +12,10 @@ namespace lunch.Repositories.Impl
         }
 
         public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using lunch.Domain.Security;
+﻿using System.Linq;
+using lunch.Domain.Security;
 using lunch.Repositories.Security;
 
 namespace lunch.Repositories.Impl.Security
@@ -8,6 +9,12 @@ namespace lunch.Repositories.Impl.Security
         public UserRepository(ApplicationDbContext dbContext)
             : base(dbContext)
         {
+        }
+        
+        public User FindByEmail(string email)
+        {
+            //TODO: enforce case-insensitivity for Email column
+            return Set.SingleOrDefault(x => x.Email == email);
         }
     }
 }

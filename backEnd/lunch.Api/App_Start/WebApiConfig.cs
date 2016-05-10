@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Net.Http.Formatting;
+using System.Web.Http;
 using lunch.Api.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
@@ -14,8 +15,11 @@ namespace lunch.Api
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
  
-            // Use camel case for JSON data.
-            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            // Use only JSON messages
+            config.Formatters.Clear();
+            var jsonFormatter = new JsonMediaTypeFormatter();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Add(jsonFormatter);
 
             // Web API routes
             config.MapHttpAttributeRoutes();

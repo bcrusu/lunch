@@ -2,9 +2,9 @@
 {
     public interface IRepository<TEntity, TKey>
     {
-        TEntity GetByKey(TKey key);
+        TEntity FindByKey(TKey key);
 
-        void Add(TEntity entity);
+        TEntity Add(TEntity entity);
 
         void Delete(TEntity entity);
     }

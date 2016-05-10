@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Claims;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using lunch.Api.Auth;
@@ -15,11 +12,13 @@ namespace lunch.Api.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private readonly IExternalUsersBusinessLogic _externalUsersBusinessLogic;
+        private readonly IUserBusinessLogic _userBusinessLogic;
+        private readonly IUserSessionBusinessLogic _userSessionBusinessLogic;
 
-        public AccountController(IExternalUsersBusinessLogic externalUsersBusinessLogic)
+        public AccountController(IUserBusinessLogic userBusinessLogic, IUserSessionBusinessLogic userSessionBusinessLogic)
         {
-            _externalUsersBusinessLogic = externalUsersBusinessLogic;
+            _userBusinessLogic = userBusinessLogic;
+            _userSessionBusinessLogic = userSessionBusinessLogic;
         }
 
         [AllowAnonymous]
@@ -31,32 +30,18 @@ namespace lunch.Api.Controllers
 
             var externalUserDetails = await LinkedinUserDetailsProvider.GetUserDetails(model, Request.GetOwinContext().Request.CallCancelled);
 
-            //TODO: persist application user & create JWT token
-            //var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = _userBusinessLogic.FindByEmail(externalUserDetails.Email);
+            if (user == null)
+                user = _userBusinessLogic.CreateUser(externalUserDetails);
 
-            //IdentityResult result = await UserManager.CreateAsync(user, string.Empty);
+            var userSession = _userSessionBusinessLogic.CreateSession(user);
 
-            //if (!result.Succeeded)
-            //{
-            //    return GetErrorResult(result);
-            //}
-
-            return Ok();
-        }
-
-        // GET api/Account/UserInfo
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-        [Route("UserInfo")]
-        public UserInfoViewModel GetUserInfo()
-        {
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-            return new UserInfoViewModel
+            var result = new LoginResultModel
             {
-                Email = User.Identity.GetUserName(),
-                HasRegistered = externalLogin == null,
-                LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
+                Token = JwtHelper.Create(userSession)
             };
+
+            return Ok(result);
         }
 
         #region Helpers
@@ -88,54 +73,6 @@ namespace lunch.Api.Controllers
             }
 
             return null;
-        }
-
-        private class ExternalLoginData
-        {
-            public string LoginProvider { get; set; }
-            public string ProviderKey { get; set; }
-            public string UserName { get; set; }
-
-            public IList<Claim> GetClaims()
-            {
-                IList<Claim> claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
-
-                if (UserName != null)
-                {
-                    claims.Add(new Claim(ClaimTypes.Name, UserName, null, LoginProvider));
-                }
-
-                return claims;
-            }
-
-            public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
-            {
-                if (identity == null)
-                {
-                    return null;
-                }
-
-                Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
-
-                if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer)
-                    || String.IsNullOrEmpty(providerKeyClaim.Value))
-                {
-                    return null;
-                }
-
-                if (providerKeyClaim.Issuer == ClaimsIdentity.DefaultIssuer)
-                {
-                    return null;
-                }
-
-                return new ExternalLoginData
-                {
-                    LoginProvider = providerKeyClaim.Issuer,
-                    ProviderKey = providerKeyClaim.Value,
-                    UserName = identity.FindFirstValue(ClaimTypes.Name)
-                };
-            }
         }
 
         #endregion
