@@ -7,8 +7,9 @@ namespace lunch.Api
     {
         public static void Configure(IAppBuilder app)
         {
-            ConfigApplication(app);
             AuthConfig.Configure(app);
+
+            ConfigApplication(app);
         }
 
         private static void ConfigApplication(IAppBuilder app)

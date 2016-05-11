@@ -1,7 +1,9 @@
 ﻿using System.Net.Http.Formatting;
 using System.Web.Http;
 using lunch.Api.Cors;
+using lunch.Api.Unity;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Practices.Unity.WebApi;
 using Newtonsoft.Json.Serialization;
 
 namespace lunch.Api
@@ -10,6 +12,8 @@ namespace lunch.Api
     {
         public static void Register(HttpConfiguration config)
         {
+            config.DependencyResolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetContainer());
+
             config.EnableCors(new DefaultCorsPolicyProvider());
 
             config.SuppressDefaultHostAuthentication();

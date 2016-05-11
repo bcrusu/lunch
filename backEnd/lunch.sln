@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lunch.Repositories", "lunch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lunch.Domain", "lunch.Domain\lunch.Domain.csproj", "{CA5C3730-82E3-448D-96C4-61935F444693}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lunch.Common", "lunch.Common\lunch.Common.csproj", "{4AB11341-C110-40BE-B712-108C8CB2292F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{CA5C3730-82E3-448D-96C4-61935F444693}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA5C3730-82E3-448D-96C4-61935F444693}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA5C3730-82E3-448D-96C4-61935F444693}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AB11341-C110-40BE-B712-108C8CB2292F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB11341-C110-40BE-B712-108C8CB2292F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB11341-C110-40BE-B712-108C8CB2292F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB11341-C110-40BE-B712-108C8CB2292F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

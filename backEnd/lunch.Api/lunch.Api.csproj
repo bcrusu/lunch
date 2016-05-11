@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -171,15 +175,10 @@
     <Compile Include="App_Start\Cors\DefaultCorsPolicyProvider.cs" />
     <Compile Include="App_Start\OwinConfig.cs" />
     <Compile Include="App_Start\Auth\AuthConfig.cs" />
-    <Compile Include="App_Start\OwinContextExtensions.cs" />
     <Compile Include="App_Start\Unity\UnityConfig.cs" />
-    <Compile Include="App_Start\Unity\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\Account\LoginResultModel.cs" />
     <Compile Include="Models\Account\LoginLinkedinModel.cs" />
     <Compile Include="Models\Account\UserInfoViewModel.cs" />
@@ -187,7 +186,6 @@
     <Compile Include="OwinStartup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -208,6 +206,10 @@
     <ProjectReference Include="..\lunch.BusinessLogic\lunch.BusinessLogic.csproj">
       <Project>{219639DC-8407-4E69-815D-6652AE6D1C11}</Project>
       <Name>lunch.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lunch.Common\lunch.Common.csproj">
+      <Project>{4AB11341-C110-40BE-B712-108C8CB2292F}</Project>
+      <Name>lunch.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\lunch.Configuration\lunch.Configuration.csproj">
       <Project>{4E495068-5F09-4C07-A0BC-E5C35AFCBF9F}</Project>
