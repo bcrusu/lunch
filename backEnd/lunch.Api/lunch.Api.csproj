@@ -173,6 +173,7 @@
     <Compile Include="App_Start\Auth\JwtHelper.cs" />
     <Compile Include="App_Start\Auth\LinkedinUserDetailsProvider.cs" />
     <Compile Include="App_Start\Cors\DefaultCorsPolicyProvider.cs" />
+    <Compile Include="App_Start\Errors\GlobalExceptionLogger.cs" />
     <Compile Include="App_Start\OwinConfig.cs" />
     <Compile Include="App_Start\Auth\AuthConfig.cs" />
     <Compile Include="App_Start\Unity\UnityConfig.cs" />

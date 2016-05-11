@@ -1,6 +1,8 @@
 ﻿using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using lunch.Api.Cors;
+using lunch.Api.Errors;
 using lunch.Api.Unity;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity.WebApi;
@@ -12,6 +14,8 @@ namespace lunch.Api
     {
         public static void Register(HttpConfiguration config)
         {
+            config.Services.Add(typeof(IExceptionLogger), new GlobalExceptionLogger());
+
             config.DependencyResolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetContainer());
 
             config.EnableCors(new DefaultCorsPolicyProvider());
