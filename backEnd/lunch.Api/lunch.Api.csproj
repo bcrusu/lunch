@@ -174,15 +174,14 @@
     <Compile Include="App_Start\Auth\LinkedinUserDetailsProvider.cs" />
     <Compile Include="App_Start\Cors\DefaultCorsPolicyProvider.cs" />
     <Compile Include="App_Start\Errors\GlobalExceptionLogger.cs" />
+    <Compile Include="App_Start\Filters\AutoSaveChangesAttribute.cs" />
     <Compile Include="App_Start\OwinConfig.cs" />
     <Compile Include="App_Start\Auth\AuthConfig.cs" />
     <Compile Include="App_Start\Unity\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Models\Account\LoginResultModel.cs" />
     <Compile Include="Models\Account\LoginLinkedinModel.cs" />
-    <Compile Include="Models\Account\UserInfoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OwinStartup.cs" />
   </ItemGroup>

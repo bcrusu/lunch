@@ -10,6 +10,8 @@ namespace lunch.Repositories
         public static void RegisterRepositoryTypes(this IUnityContainer container)
         {
             container.RegisterType<ApplicationDbContext>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDbContextOperations, ApplicationDbContextOperations>();
+
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IUserSessionRepository, UserSessionRepository>();
         }

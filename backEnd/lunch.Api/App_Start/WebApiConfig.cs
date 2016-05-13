@@ -3,6 +3,7 @@ using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using lunch.Api.Cors;
 using lunch.Api.Errors;
+using lunch.Api.Filters;
 using lunch.Api.Unity;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.Practices.Unity.WebApi;
@@ -22,6 +23,7 @@ namespace lunch.Api
 
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            config.Filters.Add(new AutoSaveChangesAttribute());
  
             // Use only JSON messages
             config.Formatters.Clear();

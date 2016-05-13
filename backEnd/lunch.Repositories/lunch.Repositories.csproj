@@ -72,7 +72,13 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Impl\ApplicationDbMigrationsConfiguration.cs" />
+    <Compile Include="IDbContextOperations.cs" />
+    <Compile Include="Impl\Migrations\201605121323186_InitialCreate.cs" />
+    <Compile Include="Impl\Migrations\201605121323186_InitialCreate.Designer.cs">
+      <DependentUpon>201605121323186_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Impl\ApplicationDbContextOperations.cs" />
+    <Compile Include="Impl\Migrations\ApplicationDbMigrationsConfiguration.cs" />
     <Compile Include="Impl\RepositoryBase.cs" />
     <Compile Include="Impl\Security\UserSessionRepository.cs" />
     <Compile Include="IRepository.cs" />
@@ -88,10 +94,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lunch.Common\lunch.Common.csproj">
+      <Project>{4AB11341-C110-40BE-B712-108C8CB2292F}</Project>
+      <Name>lunch.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lunch.Domain\lunch.Domain.csproj">
       <Project>{CA5C3730-82E3-448D-96C4-61935F444693}</Project>
       <Name>lunch.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Impl\Migrations\201605121323186_InitialCreate.resx">
+      <DependentUpon>201605121323186_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

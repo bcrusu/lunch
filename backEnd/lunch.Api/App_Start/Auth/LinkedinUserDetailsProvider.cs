@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 using lunch.Api.Models.Account;
 using lunch.BusinessLogic.Security;
 using lunch.Configuration;
@@ -10,8 +11,10 @@ using Newtonsoft.Json.Linq;
 
 namespace lunch.Api.Auth
 {
-    static class LinkedinUserDetailsProvider
+    internal static class LinkedinUserDetailsProvider
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(LinkedinUserDetailsProvider));
+
         private const string AccessTokenUrl = "https://www.linkedin.com/uas/oauth2/accessToken";
         private const string UserInfoBaseUrl = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,formatted-name,email-address,picture-url)";
         
@@ -59,9 +62,9 @@ namespace lunch.Api.Auth
                 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //TODO: log exception
+                Log.Error("Could not fetch Linkedin user details.", e);
                 return null;
             }
             finally

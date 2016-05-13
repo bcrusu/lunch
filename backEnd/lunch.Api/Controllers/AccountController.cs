@@ -1,6 +1,8 @@
-﻿using System.Net.Http;
+﻿using System.IO.Ports;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using log4net;
 using lunch.Api.Auth;
 using Microsoft.AspNet.Identity;
 using lunch.Api.Models.Account;
@@ -12,6 +14,8 @@ namespace lunch.Api.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        private static readonly ILog Log = LogManager.GetLogger<AccountController>();
+
         private readonly IUserBusinessLogic _userBusinessLogic;
         private readonly IUserSessionBusinessLogic _userSessionBusinessLogic;
 

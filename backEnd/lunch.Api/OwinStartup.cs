@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
@@ -30,6 +31,7 @@ namespace lunch.Api
 
         private void RunStartup(IAppBuilder app)
         {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
             TaskScheduler.UnobservedTaskException += TaskSchedulerUnobservedTaskException;
             LogManager.Configure();
 
@@ -38,7 +40,7 @@ namespace lunch.Api
 
             // Configure WebAPI
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            
+
             Log.Info("OwinStartup.RunStartup - done.");
         }
 
@@ -49,13 +51,30 @@ namespace lunch.Api
             Log.Info("OwinStartup.RunShutdown - done.");
             LogManager.Shutdown();
             TaskScheduler.UnobservedTaskException -= TaskSchedulerUnobservedTaskException;
+            AppDomain.CurrentDomain.UnhandledException -= CurrentDomainUnhandledException;
+        }
+
+        private void CurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            try
+            {
+                var exceptionObject = e.ExceptionObject;
+                var exception = exceptionObject as Exception;
+                if (exception != null)
+                    Log.Fatal("CurrentDomainUnhandledException", exception);
+                else
+                    Log.FatalFormat($"CurrentDomainUnhandledException: {exceptionObject}");
+            }
+            catch
+            {
+            }
         }
 
         private void TaskSchedulerUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             try
             {
-                Log.Fatal(e.Exception);
+                Log.Fatal("TaskSchedulerUnobservedTaskException", e.Exception);
             }
             catch
             {

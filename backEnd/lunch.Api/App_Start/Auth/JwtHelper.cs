@@ -11,7 +11,7 @@ namespace lunch.Api.Auth
     {
         public const string Issuer = "lunch.com";
         public const string ClientId = "lunch";
-        public const string SignatureAlgorithm = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
+        public const string SignatureAlgorithm = "http://www.w3.org/2001/04/xmldsig-more#hmac-sha256";
         public const int ExpireDays = 14;
         private const string StringValueType = "http://www.w3.org/2001/XMLSchema#string";
 
