@@ -1,14 +1,19 @@
-var baseConfig = {
-    baseUrl: 'http://localhost:7777',  // backend server base address
+let baseConfig = {
+    baseUrl: 'http://localhost:7777/api',  // API base address
     endpoint: null,  // use Aurelia HttpClient instead of 'aurelia-api' client
     configureEndpoints: [],
+    useRefreshToken: false,
+    autoUpdateToken: false,
+    
+    // TODO: review 4 properties below
     loginRedirect: '#/customer',
     logoutRedirect: '#/',
     loginRoute: '/login',
     loginOnSignup: true,
+    
     providers: {
         linkedin: {
-            url: 'api/Account/LoginLinkedin',
+            url: 'Account/LoginLinkedin',
             clientId: '77d08hsurfp6gr',
             scope: ['r_emailaddress', 'r_basicprofile'],
             state: 'll'

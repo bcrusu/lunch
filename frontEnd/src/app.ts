@@ -6,7 +6,7 @@ export class App {
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Lunch';
     config.map([
-      { route: ['', 'login'], name: 'login', moduleId: 'public/login', nav: true, title: 'Login' },
+      { route: ['', 'signin'], name: 'signin', moduleId: 'public/signin', nav: true, title: 'Sign in' },
     ]);
 
     this.router = router;
