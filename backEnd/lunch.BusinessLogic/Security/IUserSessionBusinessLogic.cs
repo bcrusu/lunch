@@ -8,5 +8,7 @@ namespace lunch.BusinessLogic.Security
         UserSession FindSession(Guid token);
 
         UserSession CreateSession(User user);
+
+        bool GetIsUserSessionValid(Guid token);
     }
 }

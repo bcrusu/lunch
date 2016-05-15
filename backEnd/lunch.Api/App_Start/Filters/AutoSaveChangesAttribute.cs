@@ -8,18 +8,31 @@ using lunch.Repositories;
 namespace lunch.Api.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public class AutoSaveChangesAttribute : ActionFilterAttribute, IActionFilter
+    public class AutoSaveChangesAttribute : ActionFilterAttribute
     {
-        public bool Enabled { get; set; } = true;
+        public bool? AutoSave { get; set; }
 
         public override Task OnActionExecutedAsync(HttpActionExecutedContext actionExecutedContext, CancellationToken cancellationToken)
         {
-            var dbContextOperations = (IDbContextOperations)actionExecutedContext.Request.GetDependencyScope().GetService(typeof(IDbContextOperations));
+            if (NeedsSave(actionExecutedContext.Request.Method))
+            {
+                var dbContextOperations = (IDbContextOperations) actionExecutedContext.Request.GetDependencyScope().GetService(typeof(IDbContextOperations));
+                
+                if (actionExecutedContext.Exception == null)
+                    return dbContextOperations.SaveChangesAsync(cancellationToken);
+            }
 
-            if (Enabled)
-                return dbContextOperations.SaveChangesAsync(cancellationToken);
+            return Task.CompletedTask;
+        }
 
-            return Task.FromResult(0);
+        private bool NeedsSave(HttpMethod httpMethod)
+        {
+            if (AutoSave.HasValue)
+                return AutoSave.Value;
+
+            return httpMethod == HttpMethod.Post ||
+                   httpMethod == HttpMethod.Put ||
+                   httpMethod == HttpMethod.Delete;
         }
     }
 }

@@ -7,8 +7,6 @@ namespace lunch.BusinessLogic.Impl.Security
 {
     internal class UserSessionBusinessLogic : IUserSessionBusinessLogic
     {
-        private const int MaxActiveSessionsCount = 5;
-
         private readonly IUserSessionRepository _userSessionRepository;
 
         public UserSessionBusinessLogic(IUserSessionRepository userSessionRepository)
@@ -26,7 +24,7 @@ namespace lunch.BusinessLogic.Impl.Security
             if (user == null) throw new ArgumentNullException(nameof(user));
 
             var activeSessionsCount = _userSessionRepository.GetActiveUserSessionsCount(user.Id);
-            if (activeSessionsCount >= MaxActiveSessionsCount)
+            if (activeSessionsCount >= ApplicationConstants.MaxActiveSessionsCount)
                 throw new InvalidOperationException("Max number of active sessions reached.");
 
             var session = new UserSession
@@ -38,6 +36,22 @@ namespace lunch.BusinessLogic.Impl.Security
             };
 
             return _userSessionRepository.Add(session);
+        }
+
+        public bool GetIsUserSessionValid(Guid token)
+        {
+            var userSession = _userSessionRepository.FindByKey(token);
+            if (userSession == null)
+                return false;
+
+            if (userSession.State != UserSessionState.Active)
+                return false;
+
+            var expireDate = userSession.CreationDate.AddDays(ApplicationConstants.UserSessionExpireDays);
+            if (expireDate < DateTime.Now)
+                return false;
+
+            return true;
         }
     }
 }

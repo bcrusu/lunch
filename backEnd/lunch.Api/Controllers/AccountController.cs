@@ -1,17 +1,13 @@
-﻿using System.IO.Ports;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using log4net;
 using lunch.Api.Auth;
-using Microsoft.AspNet.Identity;
 using lunch.Api.Models.Account;
 using lunch.BusinessLogic.Security;
 
 namespace lunch.Api.Controllers
 {
-    [Authorize]
-    [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private static readonly ILog Log = LogManager.GetLogger<AccountController>();
@@ -29,8 +25,9 @@ namespace lunch.Api.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> LoginLinkedin(LoginLinkedinModel model)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            this.CheckModelStateIsValid();
+
+            //TODO: check if user already logged-in
 
             var externalUserDetails = await LinkedinUserDetailsProvider.GetUserDetails(model, Request.GetOwinContext().Request.CallCancelled);
 
@@ -47,38 +44,5 @@ namespace lunch.Api.Controllers
 
             return Ok(result);
         }
-
-        #region Helpers
-
-        private IHttpActionResult GetErrorResult(IdentityResult result)
-        {
-            if (result == null)
-            {
-                return InternalServerError();
-            }
-
-            if (!result.Succeeded)
-            {
-                if (result.Errors != null)
-                {
-                    foreach (string error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
-            }
-
-            return null;
-        }
-
-        #endregion
     }
 }

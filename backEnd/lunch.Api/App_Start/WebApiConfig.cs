@@ -23,6 +23,7 @@ namespace lunch.Api
 
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            config.Filters.Add(new AuthorizeAttribute());
             config.Filters.Add(new AutoSaveChangesAttribute());
  
             // Use only JSON messages
@@ -36,7 +37,7 @@ namespace lunch.Api
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
         }

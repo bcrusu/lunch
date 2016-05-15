@@ -73,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\lunch.Common\lunch.Common.csproj">
+      <Project>{4AB11341-C110-40BE-B712-108C8CB2292F}</Project>
+      <Name>lunch.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\lunch.Domain\lunch.Domain.csproj">
       <Project>{CA5C3730-82E3-448D-96C4-61935F444693}</Project>
       <Name>lunch.Domain</Name>
