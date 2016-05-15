@@ -8,6 +8,13 @@ namespace lunch.Domain.Security
         [Key]
         public int Id { get; set; }
 
+        [MaxLength(256)]
+        [Required]
+        public string ExternalId { get; set; }
+
+        [Required]
+        public UserType Type { get; set; }
+
         [MaxLength(254)]
         [Required]
         [Index]

@@ -7,6 +7,7 @@ using log4net;
 using lunch.Api.Models.Account;
 using lunch.BusinessLogic.Security;
 using lunch.Configuration;
+using lunch.Domain.Security;
 using Newtonsoft.Json.Linq;
 
 namespace lunch.Api.Auth
@@ -18,7 +19,7 @@ namespace lunch.Api.Auth
         private const string AccessTokenUrl = "https://www.linkedin.com/uas/oauth2/accessToken";
         private const string UserInfoBaseUrl = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,formatted-name,email-address,picture-url)";
         
-        public static async Task<ExternalUserDetails> GetUserDetails(LoginLinkedinModel model, CancellationToken cancellationToken)
+        public static async Task<ExternalUserDetails> GetUserDetails(SignInLinkedinModel model, CancellationToken cancellationToken)
         {
             if (model == null) return null;
 
@@ -52,6 +53,7 @@ namespace lunch.Api.Auth
 
                 var result = new ExternalUserDetails
                 {
+                    UserType = UserType.ExternalLinkedin,
                     Id = jObject.GetStringValue("id"),
                     Email = jObject.GetStringValue("emailAddress"),
                     FirstName = jObject.GetStringValue("firstName"),

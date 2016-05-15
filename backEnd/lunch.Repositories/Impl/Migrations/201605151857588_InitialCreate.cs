@@ -12,6 +12,8 @@ namespace lunch.Repositories.Impl.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        ExternalId = c.String(nullable: false, maxLength: 256),
+                        Type = c.Int(nullable: false),
                         Email = c.String(nullable: false, maxLength: 254),
                         FirstName = c.String(nullable: false, maxLength: 100),
                         LastName = c.String(nullable: false, maxLength: 100),

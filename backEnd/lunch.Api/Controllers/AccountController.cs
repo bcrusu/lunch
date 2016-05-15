@@ -12,37 +12,53 @@ namespace lunch.Api.Controllers
     {
         private static readonly ILog Log = LogManager.GetLogger<AccountController>();
 
-        private readonly IUserBusinessLogic _userBusinessLogic;
         private readonly IUserSessionBusinessLogic _userSessionBusinessLogic;
 
-        public AccountController(IUserBusinessLogic userBusinessLogic, IUserSessionBusinessLogic userSessionBusinessLogic)
+        public AccountController(IUserSessionBusinessLogic userSessionBusinessLogic)
         {
-            _userBusinessLogic = userBusinessLogic;
             _userSessionBusinessLogic = userSessionBusinessLogic;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IHttpActionResult> LoginLinkedin(LoginLinkedinModel model)
+        public async Task<IHttpActionResult> SignInLinkedin(SignInLinkedinModel model)
         {
             this.CheckModelStateIsValid();
 
-            //TODO: check if user already logged-in
-
-            var externalUserDetails = await LinkedinUserDetailsProvider.GetUserDetails(model, Request.GetOwinContext().Request.CallCancelled);
-
-            var user = _userBusinessLogic.FindByEmail(externalUserDetails.Email);
-            if (user == null)
-                user = _userBusinessLogic.CreateUser(externalUserDetails);
-
-            var userSession = _userSessionBusinessLogic.CreateSession(user);
-
-            var result = new LoginResultModel
+            string token;
+            var userSession = this.GetCurrentUserSession();
+            if (userSession == null)
             {
-                Token = JwtHelper.Create(userSession)
+                var externalUserDetails = await LinkedinUserDetailsProvider.GetUserDetails(model, Request.GetOwinContext().Request.CallCancelled);
+                userSession = _userSessionBusinessLogic.CreateSessionForExternalUser(externalUserDetails);
+
+                token = JwtHelper.Create(userSession);
+            }
+            else
+            {
+                Log.InfoFormat("User '{0}' is already signed-in. Reusing existing session.", userSession.UserId);
+
+                // return the bearer token received
+                token = Request.Headers.Authorization.Parameter;
+            }
+
+            var result = new SignInResultModel
+            {
+                Token = token
             };
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        public IHttpActionResult SignOutCurrentSession()
+        {
+            var userSession = this.GetCurrentUserSession();
+
+            if (userSession != null)
+                _userSessionBusinessLogic.CloseSession(userSession);
+
+            return Ok();
         }
     }
 }

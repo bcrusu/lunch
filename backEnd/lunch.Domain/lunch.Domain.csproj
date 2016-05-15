@@ -52,6 +52,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Security\UserType.cs" />
     <Compile Include="Security\UserSessionState.cs" />
     <Compile Include="Security\UserSession.cs" />
     <Compile Include="Security\User.cs" />

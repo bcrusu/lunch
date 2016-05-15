@@ -1,6 +1,6 @@
 ﻿namespace lunch.Api.Models.Account
 {
-    public class LoginResultModel
+    public class SignInResultModel
     {
         public string Token { get; set; }
     }

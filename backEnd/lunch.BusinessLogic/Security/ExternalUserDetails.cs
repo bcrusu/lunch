@@ -1,7 +1,11 @@
-﻿namespace lunch.BusinessLogic.Security
+﻿using lunch.Domain.Security;
+
+namespace lunch.BusinessLogic.Security
 {
     public class ExternalUserDetails
     {
+        public UserType UserType { get; set; }
+
         public string Id { get; set; }
 
         public string Email { get; set; }

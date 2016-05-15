@@ -22,9 +22,12 @@ namespace lunch.BusinessLogic.Impl.Security
         public User CreateUser(ExternalUserDetails externalUserDetails)
         {
             if (externalUserDetails == null) throw new ArgumentNullException(nameof(externalUserDetails));
+            if (externalUserDetails.UserType == UserType.Local) throw new ArgumentException("Invalid user type.");
 
             var user = new User
             {
+                ExternalId = externalUserDetails.Id,
+                Type = externalUserDetails.UserType,
                 Email = externalUserDetails.Email,
                 FirstName = externalUserDetails.FirstName,
                 LastName = externalUserDetails.LastName,

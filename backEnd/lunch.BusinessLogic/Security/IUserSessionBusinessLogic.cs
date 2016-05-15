@@ -7,8 +7,10 @@ namespace lunch.BusinessLogic.Security
     {
         UserSession FindSession(Guid token);
 
-        UserSession CreateSession(User user);
-
         bool GetIsUserSessionValid(Guid token);
+
+        UserSession CreateSessionForExternalUser(ExternalUserDetails externalUserDetails);
+
+        void CloseSession(UserSession userSession);
     }
 }

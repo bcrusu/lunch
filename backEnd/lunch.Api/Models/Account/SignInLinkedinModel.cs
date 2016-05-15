@@ -2,7 +2,7 @@
 
 namespace lunch.Api.Models.Account
 {
-    public class LoginLinkedinModel
+    public class SignInLinkedinModel
     {
         [Required]
         public string ClientId { get; set; }

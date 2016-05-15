@@ -7,13 +7,13 @@ let baseConfig = {
     
     // TODO: review 4 properties below
     loginRedirect: '#/customer',
-    logoutRedirect: '#/',
+    logoutRedirect: '/home',
     loginRoute: '/login',
     loginOnSignup: true,
     
     providers: {
         linkedin: {
-            url: 'Account/LoginLinkedin',
+            url: 'Account/SignInLinkedin',
             clientId: '77d08hsurfp6gr',
             scope: ['r_emailaddress', 'r_basicprofile'],
             state: 'll'
