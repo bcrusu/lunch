@@ -16,12 +16,12 @@ namespace lunch.Api.Controllers
         [HttpGet]
         public IHttpActionResult UserInfo()
         {
-            this.CheckModelStateIsValid();
+            var userSession = this.GetCurrentUserSession();
 
             var result = new UserInfoModel
             {
-                DisplayName = "test",
-                SmallPictureUrl = "xx"
+                DisplayName = userSession.User.DisplayName,
+                SmallPictureUrl = userSession.User.PictureUrl
             };
 
             return Ok(result);

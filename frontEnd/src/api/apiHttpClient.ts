@@ -73,6 +73,9 @@ export class ApiHttpClient {
     private getInterceptor(): Interceptor {
         return {
             request: request => {
+                // TODO: add log service
+                console.log(`Requesting ${request.method} ${request.url}`);
+                
                 if (!this.authService.isAuthenticated())
                     return request;
 
@@ -82,6 +85,8 @@ export class ApiHttpClient {
                 return request;
             },
             response: (response, request) => {
+                console.log(`Received ${response.status} ${response.url}`);
+                
                 return new Promise((resolve, reject) => {
                     if (response.ok) {
                         return resolve(response);

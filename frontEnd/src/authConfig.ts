@@ -1,16 +1,16 @@
+import * as appConfig from 'appConfig'
+
 let baseConfig = {
-    baseUrl: 'http://localhost:7777/api',  // API base address
+    baseUrl: appConfig.ApiBaseUrl,
     endpoint: null,  // use Aurelia HttpClient instead of 'aurelia-api' client
     configureEndpoints: [],
+    loginOnSignup: true,
     useRefreshToken: false,
     autoUpdateToken: false,
     
-    // TODO: review 4 properties below
-    loginRedirect: '#/customer',
-    logoutRedirect: '/home',
-    loginRoute: '/login',
-    loginOnSignup: true,
-    
+    loginRedirect: '#/app',
+    logoutRedirect: '#/signin',
+        
     providers: {
         linkedin: {
             url: 'Account/SignInLinkedin',
