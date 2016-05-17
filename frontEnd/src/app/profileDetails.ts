@@ -14,14 +14,6 @@ export class Welcome {
     return this.userProfileService.getUserInfo().then(x => this.userInfo = x);
   }
 
-  get pictureUrl() {
-    return this.userInfo.pictureUrl;
-  }
-
-  get firstName() {
-    return this.userInfo.firstName;
-  }
-
   get displayName() {
     return this.userInfo.displayName;
   }

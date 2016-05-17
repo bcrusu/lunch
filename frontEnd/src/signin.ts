@@ -16,10 +16,6 @@ export class SignIn {
     return this.authService.isAuthenticated();
   }
 
-  openApp() {
-    this.router.navigateToRoute("app");
-  }
-
   authenticateLinkedin() {
     return this.authService.authenticate('linkedin')
       .then(() => {

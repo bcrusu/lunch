@@ -9,12 +9,20 @@
   <title>Lunch</title>
 
   <link rel="stylesheet" href="jspm_packages/npm/font-awesome@4.5.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="styles/styles.css">   
 </head>
 
-<body aurelia-app="main">
-  <div class="message">loading...</div>
-
+<body>
+  <div class="container">
+    <div class="row">
+      <div>
+        <div class="col-xs-10 col-xs-offset-1" aurelia-app="main">          
+          <div class="text-warning">loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <script src="jspm_packages/system.js"></script>
   <script src="config.js"></script>
   <script>

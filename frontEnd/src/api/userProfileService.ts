@@ -15,6 +15,7 @@ export class UserProfileService {
 }
 
 export interface UserInfo {
+    firstName: string,
     displayName: string,
-    smallPictureUrl: string
+    pictureUrl: string
 }
