@@ -17,7 +17,7 @@ namespace lunch.Api.Auth
         private static readonly ILog Log = LogManager.GetLogger(typeof(LinkedinUserDetailsProvider));
 
         private const string AccessTokenUrl = "https://www.linkedin.com/uas/oauth2/accessToken";
-        private const string UserInfoBaseUrl = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,formatted-name,email-address,picture-url)";
+        private const string UserInfoBaseUrl = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,formatted-name,email-address,headline,picture-urls::(original))";
         
         public static async Task<ExternalUserDetails> GetUserDetails(SignInLinkedinModel model, CancellationToken cancellationToken)
         {
@@ -49,7 +49,8 @@ namespace lunch.Api.Auth
                 responseMessage = await httpClient.SendAsync(request, cancellationToken);
                 responseMessage.EnsureSuccessStatusCode();
 
-                jObject = JObject.Parse(await responseMessage.Content.ReadAsStringAsync());
+                var responseContent = await responseMessage.Content.ReadAsStringAsync();
+                jObject = JObject.Parse(responseContent);
 
                 var result = new ExternalUserDetails
                 {
@@ -59,7 +60,8 @@ namespace lunch.Api.Auth
                     FirstName = jObject.GetStringValue("firstName"),
                     LastName = jObject.GetStringValue("lastName"),
                     DisplayName = jObject.GetStringValue("formattedName"),
-                    PictureUrl = jObject.GetStringValue("pictureUrl")
+                    Description = jObject.GetStringValue("headline"),
+                    PictureUrl = GetPictureUrl(jObject)
                 };
                 
                 return result;
@@ -76,6 +78,12 @@ namespace lunch.Api.Auth
             }
         }
 
+        private static string GetPictureUrl(JObject jObject)
+        {
+            var jtoken = jObject.SelectToken("$.pictureUrls.values[0]", false);
+            return jtoken?.ToString();
+        }
+
         private static HttpClient CreateHttpClient()
         {
             var result = new HttpClient
@@ -89,10 +97,10 @@ namespace lunch.Api.Auth
             return result;
         }
 
-        private static string GetStringValue(this JObject user, string propertyName)
+        private static string GetStringValue(this JObject jObject, string propertyName)
         {
             JToken jtoken;
-            if (!user.TryGetValue(propertyName, out jtoken))
+            if (!jObject.TryGetValue(propertyName, out jtoken))
                 return null;
             return jtoken.ToString();
         }

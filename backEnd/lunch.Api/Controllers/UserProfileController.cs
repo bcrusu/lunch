@@ -20,8 +20,9 @@ namespace lunch.Api.Controllers
 
             var result = new UserInfoModel
             {
+                FirstName = userSession.User.FirstName,
                 DisplayName = userSession.User.DisplayName,
-                SmallPictureUrl = userSession.User.PictureUrl
+                PictureUrl = userSession.User.PictureUrl
             };
 
             return Ok(result);

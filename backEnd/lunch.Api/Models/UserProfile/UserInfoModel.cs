@@ -2,8 +2,10 @@
 {
     public class UserInfoModel
     {
+        public string FirstName { get; set; }
+
         public string DisplayName { get; set; }
 
-        public string SmallPictureUrl { get; set; }
+        public string PictureUrl { get; set; }
     }
 }

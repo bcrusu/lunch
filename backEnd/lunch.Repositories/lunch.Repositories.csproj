@@ -74,9 +74,9 @@
     </Compile>
     <Compile Include="IDbContextOperations.cs" />
     <Compile Include="Impl\ApplicationDbContextOperations.cs" />
-    <Compile Include="Impl\Migrations\201605151857588_InitialCreate.cs" />
-    <Compile Include="Impl\Migrations\201605151857588_InitialCreate.Designer.cs">
-      <DependentUpon>201605151857588_InitialCreate.cs</DependentUpon>
+    <Compile Include="Impl\Migrations\201605170818115_InitialCreate.cs" />
+    <Compile Include="Impl\Migrations\201605170818115_InitialCreate.Designer.cs">
+      <DependentUpon>201605170818115_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Impl\Migrations\ApplicationDbMigrationsConfiguration.cs" />
     <Compile Include="Impl\RepositoryBase.cs" />
@@ -104,8 +104,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Impl\Migrations\201605151857588_InitialCreate.resx">
-      <DependentUpon>201605151857588_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Impl\Migrations\201605170818115_InitialCreate.resx">
+      <DependentUpon>201605170818115_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

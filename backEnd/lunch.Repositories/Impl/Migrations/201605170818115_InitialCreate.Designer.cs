@@ -13,7 +13,7 @@ namespace lunch.Repositories.Impl.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201605151857588_InitialCreate"; }
+            get { return "201605170818115_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

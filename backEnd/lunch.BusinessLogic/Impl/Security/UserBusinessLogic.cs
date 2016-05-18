@@ -32,6 +32,7 @@ namespace lunch.BusinessLogic.Impl.Security
                 FirstName = externalUserDetails.FirstName,
                 LastName = externalUserDetails.LastName,
                 DisplayName = externalUserDetails.DisplayName,
+                Description = externalUserDetails.Description,
                 PictureUrl = externalUserDetails.PictureUrl
             };
 

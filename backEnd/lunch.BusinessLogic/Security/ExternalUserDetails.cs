@@ -16,6 +16,8 @@ namespace lunch.BusinessLogic.Security
 
         public string DisplayName { get; set; }
 
+        public string Description { get; set; }
+
         public string PictureUrl { get; set; }
     }
 }

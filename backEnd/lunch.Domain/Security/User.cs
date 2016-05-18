@@ -32,8 +32,11 @@ namespace lunch.Domain.Security
         [Required]
         public string DisplayName { get; set; }
 
-        [MaxLength(2048)]
+        [MaxLength(1024)]
         [Required]
+        public string Description { get; set; }
+
+        [MaxLength(2048)]
         public string PictureUrl { get; set; }
     }
 }

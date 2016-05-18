@@ -18,7 +18,8 @@ namespace lunch.Repositories.Impl.Migrations
                         FirstName = c.String(nullable: false, maxLength: 100),
                         LastName = c.String(nullable: false, maxLength: 100),
                         DisplayName = c.String(nullable: false, maxLength: 200),
-                        PictureUrl = c.String(nullable: false, maxLength: 2048),
+                        Description = c.String(nullable: false, maxLength: 1024),
+                        PictureUrl = c.String(maxLength: 2048),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Email);
