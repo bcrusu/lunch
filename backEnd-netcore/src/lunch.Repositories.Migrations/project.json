@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": true
@@ -13,7 +13,8 @@
       "version": "1.0.0-preview1-final",
       "type": "build"
     },
-    "lunch.Repositories": "1.0.0-*"
+    "lunch.Repositories": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection": "1.0.0-rc2-final"
   },
 
   "tools": {

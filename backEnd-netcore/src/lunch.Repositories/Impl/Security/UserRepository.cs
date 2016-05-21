@@ -1,5 +1,4 @@
-﻿using System;
-using lunch.Domain.Security;
+﻿using lunch.Domain.Security;
 using lunch.Repositories.Security;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;

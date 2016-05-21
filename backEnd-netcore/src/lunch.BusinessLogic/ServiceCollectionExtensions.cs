@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace lunch.BusinessLogic
 {
-    public static class ServiceCollectionConfig
+    public static class ServiceCollectionExtensions
     {
-        public static void ConfigureBusinessLogic(this IServiceCollection services)
+        public static void AddBusinessLogic(this IServiceCollection services)
         {
             services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
             services.AddTransient<IUserSessionBusinessLogic, UserSessionBusinessLogic>();

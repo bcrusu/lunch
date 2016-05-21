@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace lunch.Repositories
 {
-    public static class ServiceCollectionConfig
+    public static class ServiceCollectionExtensions
     {
-        public static void ConfigureRepositories(this IServiceCollection services)
+        public static void AddRepositories(this IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>();
             services.AddTransient<IDbContextOperations, ApplicationDbContextOperations>();
