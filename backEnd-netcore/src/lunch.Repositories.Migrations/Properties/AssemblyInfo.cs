@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("lunch.Repositories")]
+[assembly: AssemblyTitle("lunch.Repositories.Migrations")]
 [assembly: AssemblyDescription("")]
 [assembly: ComVisible(false)]
 
@@ -14,5 +13,3 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-
-[assembly: InternalsVisibleTo("lunch.Repositories.Migrations")]

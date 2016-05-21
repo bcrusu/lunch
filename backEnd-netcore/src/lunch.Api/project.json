@@ -16,24 +16,13 @@
     "lunch.Configuration": "1.0.0-*",
     "lunch.Common": "1.0.0-*",
     "lunch.Domain": "1.0.0-*",
-    "lunch.BusinessLogic": "1.0.0-*",
-    "Microsoft.EntityFrameworkCore.Tools": {
-      "version": "1.0.0-preview1-final",
-      "type": "build"
-    }
+    "lunch.BusinessLogic": "1.0.0-*"
   },
 
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
       "version": "1.0.0-preview1-final",
       "imports": "portable-net45+win8+dnxcore50"
-    },
-    "Microsoft.EntityFrameworkCore.Tools": {
-      "version": "1.0.0-preview1-final",
-      "imports": [
-        "portable-net45+win8+dnxcore50",
-        "portable-net45+win8"
-      ]
     }
   },
 
