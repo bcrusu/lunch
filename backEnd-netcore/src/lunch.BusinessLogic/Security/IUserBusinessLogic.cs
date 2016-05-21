@@ -1,10 +1,11 @@
 ﻿using lunch.Domain.Security;
+using System.Threading.Tasks;
 
 namespace lunch.BusinessLogic.Security
 {
     public interface IUserBusinessLogic
     {
-        User FindByEmail(string email);
+        Task<User> FindByEmail(string email);
 
         User CreateUser(ExternalUserDetails externalUserDetails);
     }

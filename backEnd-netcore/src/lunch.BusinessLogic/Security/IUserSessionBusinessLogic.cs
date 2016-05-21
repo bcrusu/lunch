@@ -1,15 +1,16 @@
 ﻿using System;
 using lunch.Domain.Security;
+using System.Threading.Tasks;
 
 namespace lunch.BusinessLogic.Security
 {
     public interface IUserSessionBusinessLogic
     {
-        UserSession FindSession(Guid token);
+        Task<UserSession> FindSession(Guid token);
+        
+        Task<bool> GetIsUserSessionValid(Guid token);
 
-        bool GetIsUserSessionValid(Guid token);
-
-        UserSession CreateSessionForExternalUser(ExternalUserDetails externalUserDetails);
+        Task<UserSession> CreateSessionForExternalUser(ExternalUserDetails externalUserDetails);
 
         void CloseSession(UserSession userSession);
     }

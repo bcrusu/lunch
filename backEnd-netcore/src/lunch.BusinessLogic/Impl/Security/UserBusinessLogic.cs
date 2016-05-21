@@ -2,6 +2,7 @@
 using lunch.BusinessLogic.Security;
 using lunch.Domain.Security;
 using lunch.Repositories.Security;
+using System.Threading.Tasks;
 
 namespace lunch.BusinessLogic.Impl.Security
 {
@@ -14,7 +15,7 @@ namespace lunch.BusinessLogic.Impl.Security
             _userRepository = userRepository;
         }
 
-        public User FindByEmail(string email)
+        public Task<User> FindByEmail(string email)
         {
             return _userRepository.FindByEmail(email);
         }
@@ -36,7 +37,8 @@ namespace lunch.BusinessLogic.Impl.Security
                 PictureUrl = externalUserDetails.PictureUrl
             };
 
-            return _userRepository.Add(user);
+            _userRepository.Add(user);
+            return user;
         }
     }
 }

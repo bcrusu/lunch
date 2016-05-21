@@ -2,6 +2,7 @@
 using lunch.BusinessLogic.Security;
 using lunch.Domain.Security;
 using lunch.Repositories.Security;
+using System.Threading.Tasks;
 
 namespace lunch.BusinessLogic.Impl.Security
 {
@@ -16,14 +17,14 @@ namespace lunch.BusinessLogic.Impl.Security
             _userSessionRepository = userSessionRepository;
         }
 
-        public UserSession FindSession(Guid token)
+        public Task<UserSession> FindSession(Guid token)
         {
-            return _userSessionRepository.FindByKey(token);
+            return _userSessionRepository.FindByToken(token);
         }
 
-        public bool GetIsUserSessionValid(Guid token)
+        public async Task<bool> GetIsUserSessionValid(Guid token)
         {
-            var userSession = _userSessionRepository.FindByKey(token);
+            var userSession = await _userSessionRepository.FindByToken(token);
             if (userSession == null)
                 return false;
 
@@ -37,9 +38,9 @@ namespace lunch.BusinessLogic.Impl.Security
             return true;
         }
 
-        public UserSession CreateSessionForExternalUser(ExternalUserDetails externalUserDetails)
+        public async Task<UserSession> CreateSessionForExternalUser(ExternalUserDetails externalUserDetails)
         {
-            var user = _userBusinessLogic.FindByEmail(externalUserDetails.Email);
+            var user = await _userBusinessLogic.FindByEmail(externalUserDetails.Email);
             if (user == null)
             {
                 user = _userBusinessLogic.CreateUser(externalUserDetails);
@@ -69,7 +70,8 @@ namespace lunch.BusinessLogic.Impl.Security
                 UserId = user.Id
             };
 
-            return _userSessionRepository.Add(session);
+            _userSessionRepository.Add(session);
+            return session;
         }
 
         public void CloseSession(UserSession userSession)

@@ -1,23 +1,33 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 namespace lunch.Repositories.Impl
 {
     internal class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
         where TEntity : class
     {
-        public virtual TEntity FindByKey(TKey key)
+        public RepositoryBase(ApplicationDbContext dbContext)
         {
-            throw new NotImplementedException();
+            if (dbContext == null) throw new ArgumentNullException(nameof(dbContext));
+            DbContext = dbContext;
+            Set = DbContext.Set<TEntity>();
         }
 
-        public virtual TEntity Add(TEntity entity)
+        protected ApplicationDbContext DbContext { get; private set; }
+
+        protected DbSet<TEntity> Set { get; private set; }
+        
+        public virtual void Add(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            Set.Add(entity);
         }
 
         public virtual void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            Set.Remove(entity);
         }
     }
 }
