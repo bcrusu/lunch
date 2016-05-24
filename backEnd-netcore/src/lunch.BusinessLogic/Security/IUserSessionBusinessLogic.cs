@@ -1,6 +1,7 @@
 ﻿using System;
 using lunch.Domain.Security;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace lunch.BusinessLogic.Security
 {
@@ -8,10 +9,12 @@ namespace lunch.BusinessLogic.Security
     {
         Task<UserSession> FindSession(Guid token);
         
-        Task<bool> GetIsUserSessionValid(Guid token);
-
         Task<UserSession> CreateSessionForExternalUser(ExternalUserDetails externalUserDetails);
 
         void CloseSession(UserSession userSession);
+
+        Task<bool> GetIsPrincipalValid(ClaimsPrincipal principal);
+
+        Task<UserSession> GetUserSessionForPrincipal(ClaimsPrincipal principal);
     }
 }

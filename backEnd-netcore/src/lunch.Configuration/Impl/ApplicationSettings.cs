@@ -3,7 +3,7 @@ using System;
 
 namespace lunch.Configuration
 {
-    public class ApplicationSettings : IApplicationSettings
+    internal class ApplicationSettings : IApplicationSettings
     {
         private readonly IConfigurationRoot _configurationRoot;
         private readonly IConfigurationSection _appConfigurationSection;

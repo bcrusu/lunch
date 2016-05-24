@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using lunch.Repositories;
 using lunch.BusinessLogic;
 using lunch.Configuration;
+using lunch.Api.Internal.Auth;
 
 namespace lunch.Api
 {
@@ -35,6 +36,8 @@ namespace lunch.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseJwtAuthentication();           
 
             app.UseMvc();
         }

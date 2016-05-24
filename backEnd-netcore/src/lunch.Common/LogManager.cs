@@ -2,6 +2,7 @@
 
 namespace lunch
 {
+    // TODO:
     public static class LogManager
     {
         public static ILog GetLogger(string name)
@@ -32,5 +33,7 @@ namespace lunch
 
     public interface ILog
     {
+        void InfoFormat(string v, int userId);
+        void Error(string v, Exception e);
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using lunch.Api.Models.UserProfile;
+﻿using lunch.Api.Models.UserProfile;
 using lunch.BusinessLogic.Security;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace lunch.Api.Controllers
 {
@@ -15,9 +15,18 @@ namespace lunch.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult UserInfo()
+        public async Task<IActionResult> UserInfo()
         {
-            throw new NotImplementedException();
+            var userSession = await this.GetCurrentUserSession();
+
+            var result = new UserInfoModel
+            {
+                FirstName = userSession.User.FirstName,
+                DisplayName = userSession.User.DisplayName,
+                PictureUrl = userSession.User.PictureUrl
+            };
+
+            return Ok(result);
         }
     }
 }

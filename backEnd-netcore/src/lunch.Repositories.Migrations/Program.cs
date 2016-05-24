@@ -4,7 +4,7 @@
     {
         public static void Main(string[] args)
         {
-            // atm EF cannot be run for a class library project
+            // atm EF tools cannot be run for a class library project
             // used only for development
         }
     }

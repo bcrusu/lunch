@@ -10,6 +10,7 @@ namespace lunch.BusinessLogic
         {
             services.AddTransient<IUserBusinessLogic, UserBusinessLogic>();
             services.AddTransient<IUserSessionBusinessLogic, UserSessionBusinessLogic>();
+            services.AddTransient<IJwtSecurityTokenFactory, JwtSecurityTokenFactory>();
         }
     }
 }
