@@ -1,5 +1,6 @@
 ﻿using lunch.Api.Internal.Auth;
 using lunch.Api.Internal.Cors;
+using lunch.Api.Internal.Mvc;
 using lunch.BusinessLogic;
 using lunch.Configuration;
 using lunch.Repositories;
@@ -31,8 +32,7 @@ namespace lunch.Api
             services.AddRepositories();
             services.AddBusinessLogic();
 
-            services.AddCors();
-            services.AddMvc();
+            services.AddMvcServices();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
