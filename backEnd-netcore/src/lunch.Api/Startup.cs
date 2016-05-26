@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using lunch.Api.Internal.Auth;
+using lunch.Api.Internal.Cors;
+using lunch.BusinessLogic;
+using lunch.Configuration;
+using lunch.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using lunch.Repositories;
-using lunch.BusinessLogic;
-using lunch.Configuration;
-using lunch.Api.Internal.Auth;
 using NLog.Extensions.Logging;
 
 namespace lunch.Api
@@ -30,12 +31,15 @@ namespace lunch.Api
             services.AddRepositories();
             services.AddBusinessLogic();
 
+            services.AddCors();
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddNLog();
+
+            app.UseCors();
 
             app.UseJwtAuthentication();           
 
