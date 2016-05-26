@@ -4,19 +4,21 @@ using lunch.BusinessLogic.Security;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using lunch.Api.Internal.Auth;
+using Microsoft.Extensions.Logging;
 
 namespace lunch.Api.Controllers
 {
     public class AccountController : Controller
     {
-        private static readonly ILog Log = LogManager.GetLogger<AccountController>();
-
+        private readonly ILogger<AccountController> _logger;
         private readonly IUserSessionBusinessLogic _userSessionBusinessLogic;
         private readonly IJwtSecurityTokenFactory _jwtSecurityTokenFactory;
 
-        public AccountController(IUserSessionBusinessLogic userSessionBusinessLogic,
+        public AccountController(ILogger<AccountController> logger,
+            IUserSessionBusinessLogic userSessionBusinessLogic,
             IJwtSecurityTokenFactory jwtSecurityTokenFactory)
         {
+            _logger = logger;
             _userSessionBusinessLogic = userSessionBusinessLogic;
             _jwtSecurityTokenFactory = jwtSecurityTokenFactory;
         }
@@ -38,7 +40,7 @@ namespace lunch.Api.Controllers
             }
             else
             {
-                Log.InfoFormat("User '{0}' is already signed-in. Reusing existing session.", userSession.UserId);
+                _logger.LogInformation("User '{0}' is already signed-in. Reusing existing session.", userSession.UserId);
 
                 // return the bearer token received
                 //TODO: token = Request.Headers. Authorization.Parameter;

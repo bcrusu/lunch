@@ -9,13 +9,13 @@ using lunch.Domain.Security;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using lunch.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace lunch.Api.Internal.Auth
 {
-    internal static class LinkedinUserDetailsProvider
+    //TODO: review implementation & move to 'lunch.BusinessLogic' project
+    internal class LinkedinUserDetailsProvider
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(LinkedinUserDetailsProvider));
-
         private const string AccessTokenUrl = "https://www.linkedin.com/uas/oauth2/accessToken";
         private const string UserInfoBaseUrl = "https://api.linkedin.com/v1/people/~:(id,first-name,last-name,formatted-name,email-address,headline,picture-urls::(original))";
         
@@ -24,6 +24,7 @@ namespace lunch.Api.Internal.Auth
             if (model == null) return null;
 
             var applicationSettings = serviceProvider.GetService<IApplicationSettings>();
+            var logger = serviceProvider.GetService<ILogger<LinkedinUserDetailsProvider>>();
 
             HttpClient httpClient = null;
             try
@@ -43,7 +44,7 @@ namespace lunch.Api.Internal.Auth
                 responseMessage.EnsureSuccessStatusCode();
 
                 var jObject = JObject.Parse(await responseMessage.Content.ReadAsStringAsync());
-                var accessToken = jObject.GetStringValue("access_token");
+                var accessToken = GetStringValue(jObject, "access_token");
 
                 //2. get user info
                 var request = new HttpRequestMessage(HttpMethod.Get, UserInfoBaseUrl + "?format=json&oauth2_access_token=" + Uri.EscapeDataString(accessToken));
@@ -57,12 +58,12 @@ namespace lunch.Api.Internal.Auth
                 var result = new ExternalUserDetails
                 {
                     UserType = UserType.ExternalLinkedin,
-                    Id = jObject.GetStringValue("id"),
-                    Email = jObject.GetStringValue("emailAddress"),
-                    FirstName = jObject.GetStringValue("firstName"),
-                    LastName = jObject.GetStringValue("lastName"),
-                    DisplayName = jObject.GetStringValue("formattedName"),
-                    Description = jObject.GetStringValue("headline"),
+                    Id = GetStringValue(jObject, "id"),
+                    Email = GetStringValue(jObject, "emailAddress"),
+                    FirstName = GetStringValue(jObject, "firstName"),
+                    LastName = GetStringValue(jObject, "lastName"),
+                    DisplayName = GetStringValue(jObject, "formattedName"),
+                    Description = GetStringValue(jObject, "headline"),
                     PictureUrl = GetPictureUrl(jObject)
                 };
                 
@@ -70,7 +71,7 @@ namespace lunch.Api.Internal.Auth
             }
             catch (Exception e)
             {
-                Log.Error("Could not fetch Linkedin user details.", e);
+                logger.LogError("Could not fetch Linkedin user details. {0}", e);
                 return null;
             }
             finally
@@ -99,7 +100,7 @@ namespace lunch.Api.Internal.Auth
             return result;
         }
 
-        private static string GetStringValue(this JObject jObject, string propertyName)
+        private static string GetStringValue(JObject jObject, string propertyName)
         {
             JToken jtoken;
             if (!jObject.TryGetValue(propertyName, out jtoken))

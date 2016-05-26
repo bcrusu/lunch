@@ -7,6 +7,7 @@ using lunch.Repositories;
 using lunch.BusinessLogic;
 using lunch.Configuration;
 using lunch.Api.Internal.Auth;
+using NLog.Extensions.Logging;
 
 namespace lunch.Api
 {
@@ -34,8 +35,7 @@ namespace lunch.Api
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            loggerFactory.AddNLog();
 
             app.UseJwtAuthentication();           
 
