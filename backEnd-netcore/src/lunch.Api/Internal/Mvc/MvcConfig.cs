@@ -21,6 +21,7 @@ namespace lunch.Api.Internal.Mvc
 
         private static void ConfigureMvcOptions(MvcOptions options)
         {
+            options.Filters.Add(new ExceptionLoggerFilter());
             options.Filters.Add(new AutoSaveChangesAttribute());
         }
     }
