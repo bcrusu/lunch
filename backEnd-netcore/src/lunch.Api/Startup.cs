@@ -43,7 +43,7 @@ namespace lunch.Api
 
             app.UseJwtAuthentication();           
 
-            app.UseMvc();
+            app.UseApplicationMvc();
         }
     }
 }

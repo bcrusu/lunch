@@ -14,7 +14,7 @@ namespace lunch.Domain.Security
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }
+        public User User { get; set; }
 
         [Required]
         public DateTime CreationDate { get; set; }

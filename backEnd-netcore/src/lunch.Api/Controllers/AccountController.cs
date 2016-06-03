@@ -25,7 +25,7 @@ namespace lunch.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> SignInLinkedin(SignInLinkedinModel model)
+        public async Task<IActionResult> SignInLinkedin([FromBody] SignInLinkedinModel model)
         {
             this.CheckModelStateIsValid();
 

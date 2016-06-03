@@ -21,6 +21,9 @@ namespace lunch.Configuration
             get
             {
                 var base64Key = _appConfigurationSection["JwtSignKey"];
+                if (string.IsNullOrEmpty(base64Key))
+                    throw new InvalidOperationException("Invalid config value detected.");
+
                 return Convert.FromBase64String(base64Key);
             }
         }

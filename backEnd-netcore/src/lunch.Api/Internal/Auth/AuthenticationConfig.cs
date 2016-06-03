@@ -5,7 +5,7 @@ using lunch.Configuration;
 
 namespace lunch.Api.Internal.Auth
 {
-    internal static class AuthConfig
+    internal static class AuthenticationConfig
     {
         public static void UseJwtAuthentication(this IApplicationBuilder app)
         {
