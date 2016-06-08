@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/bcrusu/lunch/backEnd-go/api"
-	_ "github.com/bcrusu/lunch/backEnd-go/configuration"
+	_ "github.com/denisenkom/go-mssqldb" //register MSSQL driver
 )
 
 func init() {

@@ -4,7 +4,7 @@ type User struct {
 	ID          int
 	ExternalID  string
 	Type        UserType
-	UserType    string
+	Email       string
 	FirstName   string
 	LastName    string
 	DisplayName string
