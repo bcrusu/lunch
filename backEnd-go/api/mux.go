@@ -13,9 +13,9 @@ func NewMux() http.Handler {
 
 	mux.Use(middleware.NewCorsHandler())
 	mux.UseC(middleware.ErrorHandler)
+	mux.UseC(middleware.SQLTransaction)
 
 	//TODO: AUTH
-	//TODO: auto save changes middleware
 
 	handlers.ConfigureMux(mux)
 
