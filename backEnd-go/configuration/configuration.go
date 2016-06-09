@@ -42,7 +42,7 @@ func LinkedinClientSecret() string {
 	return secretConfig.GetString("LinkedinClientSecret")
 }
 
-func JwtSignKey() []byte {
+func JWTSignKey() []byte {
 	if cachedJwtSignKey != nil {
 		return cachedJwtSignKey
 	}

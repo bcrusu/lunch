@@ -8,9 +8,10 @@ import (
 )
 
 type UserSessionRepository interface {
-	Add(userSession domain.UserSession)
+	Add(userSession *domain.UserSession)
+	Update(userSession *domain.UserSession)
 	FindByToken(token []byte) *domain.UserSession
-	GetActiveUserSessionsCount(userID int64) int64
+	GetActiveUserSessions(userID int64) []domain.UserSession
 }
 
 type userSessionRepository struct {
@@ -23,9 +24,14 @@ func NewUserSessionRepository(db *sql.DB) UserSessionRepository {
 	return result
 }
 
-func (r *userSessionRepository) Add(userSession domain.UserSession) {
+func (r *userSessionRepository) Add(userSession *domain.UserSession) {
 	internal.ExecInsert(r.db, `INSERT INTO [UserSessions] ([Token], [CreationDate], [State], [UserId]) 
 		VALUES (?, ?, ?, ?)`, userSession.Token, userSession.CreationDate, userSession.State, userSession.UserID)
+}
+
+func (r *userSessionRepository) Update(userSession *domain.UserSession) {
+	internal.ExecUpdate(r.db, `UPDATE [UserSessions] SET [CreationDate] = ?, [State] = ?, [UserId] = ? 
+		WHERE [Token] = ?`, userSession.CreationDate, userSession.State, userSession.UserID, userSession.Token)
 }
 
 func (r *userSessionRepository) FindByToken(token []byte) *domain.UserSession {
@@ -33,9 +39,9 @@ func (r *userSessionRepository) FindByToken(token []byte) *domain.UserSession {
 	return entity.(*domain.UserSession)
 }
 
-func (r *userSessionRepository) GetActiveUserSessionsCount(userID int64) int64 {
-	value := internal.ExecScalar(r.db, "SELECT count(*) FROM [UserSessions] us WHERE us.[UserId] = ? AND us.[State] = ?", userID, domain.UserSessionStateActive)
-	return value.(int64)
+func (r *userSessionRepository) GetActiveUserSessions(userID int64) []domain.UserSession {
+	entities := internal.RunQuery(r.db, userSessionFactory, selectUserSessionBase+" WHERE us.[UserId] = ? AND us.[State] = ?", userID, domain.UserSessionStateActive)
+	return getUserSessions(entities)
 }
 
 func userSessionFactory() (interface{}, []interface{}) {
@@ -46,6 +52,15 @@ func userSessionFactory() (interface{}, []interface{}) {
 		&instance.State}
 
 	return &instance, scanDest
+}
+
+func getUserSessions(entities []interface{}) []domain.UserSession {
+	result := make([]domain.UserSession, len(entities))
+	for _, entity := range entities {
+		result = append(result, entity.(domain.UserSession))
+	}
+
+	return result
 }
 
 const selectUserSessionBase = `SELECT [Token],

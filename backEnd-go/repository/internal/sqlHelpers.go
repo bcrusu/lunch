@@ -61,13 +61,13 @@ func ExecInsert(db *sql.DB, query string, args ...interface{}) int64 {
 		log.Panicf("Error running insert query: %s", err)
 	}
 
-	rows, err := res.RowsAffected()
+	affectedRows, err := res.RowsAffected()
 	if err != nil {
 		log.Panicf("Error getting number of affected rows: %s", err)
 	}
 
-	if rows != 1 {
-		log.Panicf("Unexpected number of affected rows. Expected 1 got %d", rows)
+	if affectedRows != 1 {
+		log.Panicf("Unexpected number of affected rows. Expected 1 got %d", affectedRows)
 	}
 
 	lastID, err := res.LastInsertId()
@@ -76,6 +76,23 @@ func ExecInsert(db *sql.DB, query string, args ...interface{}) int64 {
 	}
 
 	return 0
+}
+
+func ExecUpdate(db *sql.DB, query string, args ...interface{}) {
+	res, err := db.Exec(query, args...)
+
+	if err != nil {
+		log.Panicf("Error running update query: %s", err)
+	}
+
+	affectedRows, err := res.RowsAffected()
+	if err != nil {
+		log.Panicf("Error getting number of affected rows: %s", err)
+	}
+
+	if affectedRows != 1 {
+		log.Panicf("Unexpected number of affected rows. Expected 1 got %d", affectedRows)
+	}
 }
 
 func ExecScalar(db *sql.DB, query string, args ...interface{}) interface{} {

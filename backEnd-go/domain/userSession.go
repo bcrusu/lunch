@@ -4,7 +4,7 @@ import "time"
 
 type UserSession struct {
 	Token        []byte
-	UserID       int
+	UserID       int64
 	CreationDate time.Time
 	State        UserSessionState
 }

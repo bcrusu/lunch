@@ -8,7 +8,8 @@ import (
 )
 
 type UserRepository interface {
-	Add(user domain.User) (ID int64)
+	Add(user *domain.User)
+	Update(user *domain.User)
 	FindByID(id int) *domain.User
 	FindByEmail(email string) *domain.User
 }
@@ -23,12 +24,18 @@ func NewUserRepository(db *sql.DB) UserRepository {
 	return result
 }
 
-func (r *userRepository) Add(user domain.User) int64 {
+func (r *userRepository) Add(user *domain.User) {
 	ID := internal.ExecInsert(r.db, `INSERT INTO [Users] ([Description], [DisplayName], [Email], [ExternalId], [FirstName], [LastName], [PictureUrl], [Type]) 
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, user.Description, user.DisplayName, user.Email, user.ExternalID, user.FirstName, user.LastName,
 		user.PictureURL, user.Type)
 
-	return ID
+	user.ID = ID
+}
+
+func (r *userRepository) Update(user *domain.User) {
+	internal.ExecUpdate(r.db, `UPDATE [Users] SET [Description] = ?, [DisplayName] = ?, [Email] = ?, [ExternalId] = ?, [FirstName] = ?, [LastName] = ?, 
+		[PictureUrl] = ?, [Type] = ? WHERE [Id] = ?`, user.Description, user.DisplayName, user.Email, user.ExternalID, user.FirstName, user.LastName,
+		user.PictureURL, user.Type, user.ID)
 }
 
 func (r *userRepository) FindByID(id int) *domain.User {
