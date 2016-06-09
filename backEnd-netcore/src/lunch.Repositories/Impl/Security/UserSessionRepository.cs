@@ -21,7 +21,7 @@ namespace lunch.Repositories.Impl.Security
 
         public int GetActiveUserSessionsCount(int userId)
         {
-            return Set.Include(x => x.User).Count(x => x.UserId == userId);
+            return Set.Include(x => x.User).Count(x => x.UserId == userId && x.State == UserSessionState.Active);
         }
     }
 }

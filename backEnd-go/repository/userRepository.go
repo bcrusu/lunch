@@ -8,8 +8,7 @@ import (
 )
 
 type UserRepository interface {
-	Add(user domain.User) int
-	Delete(user domain.User)
+	Add(user domain.User) (ID int64)
 	FindByID(id int) *domain.User
 	FindByEmail(email string) *domain.User
 }
@@ -24,21 +23,21 @@ func NewUserRepository(db *sql.DB) UserRepository {
 	return result
 }
 
-func (r *userRepository) Add(user domain.User) int {
-	return -1 //TODO
-}
+func (r *userRepository) Add(user domain.User) int64 {
+	ID := internal.ExecInsert(r.db, `INSERT INTO [Users] ([Description], [DisplayName], [Email], [ExternalId], [FirstName], [LastName], [PictureUrl], [Type]) 
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, user.Description, user.DisplayName, user.Email, user.ExternalID, user.FirstName, user.LastName,
+		user.PictureURL, user.Type)
 
-func (r *userRepository) Delete(user domain.User) {
-	//TODO
+	return ID
 }
 
 func (r *userRepository) FindByID(id int) *domain.User {
-	entity := internal.RunQueryRow(r.db, userFactory, selectUserBase+" WHERE u.[Id] = ?1", id)
+	entity := internal.RunQueryRow(r.db, userFactory, selectUserBase+" WHERE u.[Id] = ?", id)
 	return entity.(*domain.User)
 }
 
 func (r *userRepository) FindByEmail(email string) *domain.User {
-	entity := internal.RunQueryRow(r.db, userFactory, selectUserBase+" WHERE u.[Email] = ?1", email)
+	entity := internal.RunQueryRow(r.db, userFactory, selectUserBase+" WHERE u.[Email] = ?", email)
 	return entity.(*domain.User)
 }
 

@@ -81,7 +81,6 @@ func setTransactionIsolationLevel(db *sql.DB) {
 
 func needsCommit(request *http.Request) bool {
 	switch request.Method {
-
 	case "POST", "PUT", "DELETE":
 		return true
 	default:
