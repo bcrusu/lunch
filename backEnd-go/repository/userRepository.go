@@ -1,17 +1,17 @@
-package security
+package repository
 
 import (
 	"database/sql"
 
-	"github.com/bcrusu/lunch/backEnd-go/domain/security"
+	"github.com/bcrusu/lunch/backEnd-go/domain"
 	"github.com/bcrusu/lunch/backEnd-go/repository/internal"
 )
 
 type UserRepository interface {
-	Add(user security.User) int
-	Delete(user security.User)
-	FindByID(id int) *security.User
-	FindByEmail(email string) *security.User
+	Add(user domain.User) int
+	Delete(user domain.User)
+	FindByID(id int) *domain.User
+	FindByEmail(email string) *domain.User
 }
 
 type userRepository struct {
@@ -24,26 +24,26 @@ func NewUserRepository(db *sql.DB) UserRepository {
 	return result
 }
 
-func (r *userRepository) Add(user security.User) int {
+func (r *userRepository) Add(user domain.User) int {
 	return -1 //TODO
 }
 
-func (r *userRepository) Delete(user security.User) {
+func (r *userRepository) Delete(user domain.User) {
 	//TODO
 }
 
-func (r *userRepository) FindByID(id int) *security.User {
+func (r *userRepository) FindByID(id int) *domain.User {
 	entity := internal.RunQueryRow(r.db, userFactory, selectUserBase+" WHERE u.[Id] = ?1", id)
-	return entity.(*security.User)
+	return entity.(*domain.User)
 }
 
-func (r *userRepository) FindByEmail(email string) *security.User {
+func (r *userRepository) FindByEmail(email string) *domain.User {
 	entity := internal.RunQueryRow(r.db, userFactory, selectUserBase+" WHERE u.[Email] = ?1", email)
-	return entity.(*security.User)
+	return entity.(*domain.User)
 }
 
 func userFactory() (interface{}, []interface{}) {
-	instance := security.User{}
+	instance := domain.User{}
 	scanDest := []interface{}{&instance.ID,
 		&instance.Description,
 		&instance.DisplayName,

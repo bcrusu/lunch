@@ -1,6 +1,6 @@
-package security
+package businessLogic
 
-import "github.com/bcrusu/lunch/backEnd-go/domain/security"
+import "github.com/bcrusu/lunch/backEnd-go/domain"
 
 type ExternalUserDetails struct {
 	UserType    security.UserType

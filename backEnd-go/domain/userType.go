@@ -1,4 +1,4 @@
-package security
+package domain
 
 type UserType int
 
