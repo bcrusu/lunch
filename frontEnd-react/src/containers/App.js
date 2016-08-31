@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
+
+//TODO: do not bundle css
+import 'bootstrap/dist/css/bootstrap.css'
+import '../../styles/styles.css'
 
 class App extends Component {
   constructor(props) {
@@ -10,9 +13,7 @@ class App extends Component {
   render() {
     const { children } = this.props
     return (
-      <div>
-        <h1>Lunch</h1>
-        <hr />
+      <div className="container">
         {children}
       </div>
     )
