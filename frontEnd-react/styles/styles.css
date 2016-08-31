@@ -1,0 +1,13 @@
+html,body { margin: 0; height: 100%; overflow: hidden }
+      
+.btn-linkedin {
+  color: #fff;
+  background-color: #007bb6;
+  border: 1px solid #0073ae;
+}
+
+.btn-linkedin:hover,
+.btn-linkedin:focus {
+  color: #fff;
+  background-color: #0069a4;
+}
