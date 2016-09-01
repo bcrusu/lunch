@@ -3,8 +3,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import Root from './src/containers/Root'
-import configureStore from './src/store/configureStore'
+import Root from './src/Root'
+import configureStore from './src/configureStore'
 
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store)

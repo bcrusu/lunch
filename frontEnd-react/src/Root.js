@@ -1,6 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 import { Provider } from 'react-redux'
-import AppRouter from '../components/AppRouter'
+import AppRouter from './AppRouter'
+
+//TODO: do not bundle css
+import 'bootstrap/dist/css/bootstrap.css'
+import '../styles/styles.css'
 
 export default class Root extends Component {
   render() {
