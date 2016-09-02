@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
 import createLogger from 'redux-logger'
 import rootReducer from './rootReducer'
 import createSagaMiddleware from 'redux-saga'
@@ -22,7 +21,7 @@ export default function configureStore(preloadedState) {
 
 function getEnhancer() {
   const sagaMiddleware = createSagaMiddleware()
-  let middleware = [thunk, sagaMiddleware]
+  let middleware = [sagaMiddleware]
   
   if (isDev)
     middleware = [...middleware, createLogger()]
