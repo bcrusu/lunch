@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import signIn from './signIn'
+import signin from './signin'
 
 const reducer = combineReducers({
-    [signIn.NAME]: signIn.reducer
+    [signin.NAME]: signin.reducer
 })
 
 export default reducer

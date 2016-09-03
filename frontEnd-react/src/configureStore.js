@@ -1,20 +1,24 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import rootReducer from './rootReducer'
+import rootSaga from './rootSaga'
 import createSagaMiddleware from 'redux-saga'
 
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
 
 export default function configureStore(preloadedState) {
+  const { enhancer, runSaga } = getEnhancer()
   const store = createStore(
     rootReducer,
     preloadedState,
-    getEnhancer()
+    enhancer
   )
 
   if (isDev)
     enableHotModuleReloading(store)
+
+  runSaga(rootSaga)
 
   return store
 }
@@ -22,7 +26,7 @@ export default function configureStore(preloadedState) {
 function getEnhancer() {
   const sagaMiddleware = createSagaMiddleware()
   let middleware = [sagaMiddleware]
-  
+
   if (isDev)
     middleware = [...middleware, createLogger()]
 
@@ -33,7 +37,7 @@ function getEnhancer() {
     enhancer = compose(enhancer, devToolsExtension)
   }
 
-  return enhancer
+  return { enhancer, runSaga: sagaMiddleware.run }
 }
 
 function enableHotModuleReloading(store) {
