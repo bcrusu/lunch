@@ -1,13 +1,13 @@
 import React from 'react'
 import { Router, Route } from 'react-router'
-import { createPublicRoute } from './public/publicRoute'
-import { createProfileRoute } from './profile/profileRoute'
+import public_ from './public'
+import profile from './profile'
 import publicRoot from './public/root'
 
 export default ({ history }) => (
   <Router history={history}>
-    { createPublicRoute() }
-    { createProfileRoute() }
+    { public_.route.createPublicRoute() }
+    { profile.route.createProfileRoute() }
     <Route path="*" component={publicRoot.components.PublicRoot}/>
   </Router>
 )

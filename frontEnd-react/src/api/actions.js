@@ -1,3 +1,5 @@
+import { createAction } from '../utils/actionUtils'
+
 const REQUEST = 'REQUESTING'
 const SUCCESS = 'SUCCESS'
 const FAILURE = 'FAILURE'
@@ -6,10 +8,6 @@ function createApiRequestTypes(base) {
     const res = {};
     [REQUEST, SUCCESS, FAILURE].forEach(type => res[type] = `${base}_${type}`)
     return res;
-}
-
-function createAction(type, payload = {}) {
-    return { type, ...payload }
 }
 
 //TODO: rename to action types

@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import createLogger from 'redux-logger'
 import rootReducer from './rootReducer'
-import rootSaga from './rootSaga'
+import * as rootSagas from './rootSagas'
 import createSagaMiddleware from 'redux-saga'
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -18,7 +18,7 @@ export default function configureStore(preloadedState) {
   if (isDev)
     enableHotModuleReloading(store)
 
-  runSaga(rootSaga)
+  runSaga(rootSagas.watch)
 
   return store
 }

@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux'
 import { routerReducer} from 'react-router-redux'
-import publicReducer from './public/publicReducer'
-import profileReducer from './profile/profileReducer'
+import public_ from './public'
+import profile from './profile'
+import auth from './auth'
 
 const rootReducer = combineReducers({
     routing: routerReducer,
-    public: publicReducer,
+    [auth.NAME]: auth.reducer,
+    [public_.NAME]: public_.reducer,
     //profile: profileReducer
 })
 

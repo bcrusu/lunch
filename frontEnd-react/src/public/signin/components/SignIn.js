@@ -6,6 +6,10 @@ class SignIn extends Component {
     super(props)
   }
 
+  componentWillMount () {
+
+  }
+
   render() {
     return (
       <div>
@@ -21,6 +25,9 @@ class SignIn extends Component {
       </div>
     )
   }
+}
+
+function mapStateToProps(state) {
 }
 
 export default connect()(SignIn)

@@ -1,6 +1,6 @@
 import { fork } from 'redux-saga/effects'
 
-export function* watchProfileRoot() {
+export function* watch() {
     /*yield [
         fork(watchSignin)
     ]*/
