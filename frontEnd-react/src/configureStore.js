@@ -3,6 +3,8 @@ import createLogger from 'redux-logger'
 import rootReducer from './rootReducer'
 import * as rootSagas from './rootSagas'
 import createSagaMiddleware from 'redux-saga'
+import { browserHistory } from 'react-router'
+import { routerMiddleware } from 'react-router-redux'
 
 const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
@@ -25,7 +27,7 @@ export default function configureStore(preloadedState) {
 
 function getEnhancer() {
   const sagaMiddleware = createSagaMiddleware()
-  let middleware = [sagaMiddleware]
+  let middleware = [routerMiddleware(browserHistory), sagaMiddleware]
 
   if (isDev)
     middleware = [...middleware, createLogger()]

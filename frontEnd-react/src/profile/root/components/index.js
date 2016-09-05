@@ -1,2 +1,5 @@
-export { default as ProfileRoot } from './ProfileRoot';
-export { default as NavBar } from './NavBar';
+import ProfileRoot_ from './ProfileRoot'
+import { requireAuthentication } from './AuthenticatedComponent'
+
+export { default as NavBar } from './NavBar'
+export const ProfileRoot = requireAuthentication(ProfileRoot_)

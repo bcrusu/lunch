@@ -8,12 +8,13 @@ class PublicRoot extends Component {
   }
 
   componentWillMount() {
-    
+
   }
 
   render() {
     return (
       <div className="container">
+        <h3 className="text-center message">Meet someone new every day!</h3>
         {this.props.children}
       </div>
     )
@@ -23,7 +24,7 @@ class PublicRoot extends Component {
 const mapStateToProps = state => ({})
 
 const mapDispatchToProps = dispatch => ({
-  
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PublicRoot)
