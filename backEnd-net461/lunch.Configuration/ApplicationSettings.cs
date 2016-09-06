@@ -14,6 +14,8 @@ namespace lunch.Configuration
 
         public static string DefaultAccessControlAllowOrigin => ConfigurationManager.AppSettings["DefaultAccessControlAllowOrigin"];
 
+        public static string LinkedinClientId => ConfigurationManager.AppSettings["LinkedinClientId"];
+
         public static string LinkedinClientSecret => Secrets.LinkedinClientSecret.Value;
 
         public static byte[] JwtSignKey

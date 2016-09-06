@@ -35,7 +35,7 @@ namespace lunch.Api.Auth
                         new KeyValuePair<string, string>("grant_type", "authorization_code"),
                         new KeyValuePair<string, string>("code", model.Code),
                         new KeyValuePair<string, string>("redirect_uri", model.RedirectUri),
-                        new KeyValuePair<string, string>("client_id", model.ClientId),
+                        new KeyValuePair<string, string>("client_id", ApplicationSettings.LinkedinClientId),
                         new KeyValuePair<string, string>("client_secret", ApplicationSettings.LinkedinClientSecret)
                     }), cancellationToken);
                 responseMessage.EnsureSuccessStatusCode();
