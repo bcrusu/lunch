@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
-
-const API_ROOT = 'http://localhost:7777/api'   //TODO: force https
+import auth from '../auth'
+import { API_ROOT } from '../config'
 
 function getFullApiUrl(endpoint) {
     return (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
@@ -13,9 +13,8 @@ function getFetchInitObject(method, body = undefined) {
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
 
-    //TODO: add authService
-    if (authService.isAuthenticated()) {
-        let token = authService.getAccessToken();
+    if (auth.authService.isAuthenticated()) {
+        let token = auth.authService.getAuthToken();
         headers.append("Authorization", `Bearer ${token}`);
     }
 
@@ -30,40 +29,46 @@ function getFetchInitObject(method, body = undefined) {
     }
 
     if (body)
-        init.body = body
+        init.body = JSON.stringify(body)
 
     return init;
 }
 
-function apiFetch(endpoint, method, body = undefined) {
+export function apiFetch(endpoint, method, body = undefined) {
     const fullUrl = getFullApiUrl(endpoint)
     const init = getFetchInitObject(method, body)
 
     return fetch(fullUrl, init)
         .then(response => {
-            console.log(response)  //TODO: remove
-
             if (!response.ok) {
                 return Promise.reject(response)
             }
 
-            return response.json().then(json => ({ json, response }))
+            return Promise.resolve(response)
         })
-        .then(response => ({ response }), error => ({ error: error.message || 'API call failed.' }))
+        .then(response => response, error => ({ error: error.message || 'API call failed.' }))
+}
+
+function apiFetchJson(endpoint, method, body = undefined) {
+    return apiFetch(endpoint, method, body)
+        .then(response => {
+            return response.json()
+        })
 }
 
 export function apiGet(endpoint) {
-    return apiFetch(endpoint, 'GET')
+    return apiFetchJson(endpoint, 'GET')
 }
 
 export function apiPost(endpoint, body) {
-    return apiFetch(endpoint, 'POST', body)
+    return apiFetchJson(endpoint, 'POST', body)
 }
 
 export function apiPut(endpoint, body) {
-    return apiFetch(endpoint, 'PUT', body)
+    return apiFetchJson(endpoint, 'PUT', body)
 }
 
 export function apiDelete(endpoint) {
-    return apiFetch(endpoint, 'DELETE')
+    return apiFetchJson(endpoint, 'DELETE')
 }
+

@@ -1,40 +1,18 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
 
-module.exports = {
-  devtool: 'cheap-module-eval-source-map',
-  entry: [
-    'webpack-hot-middleware/client',
-    './index'
-  ],
+const isProd = process.env.NODE_ENV === 'production'
+const isDev = !isProd
+
+const config = {
+  devtool: isDev ? "cheap-module-eval-source-map" : "hidden-source-map",
+  entry: getEntry(),
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'lunch.js',
     publicPath: '/static/'
   },
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    /*new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-      sourceMap: false,
-      compress: {
-        warnings: false,
-        sequences: true,
-        dead_code: true,
-        conditionals: true,
-        booleans: true,
-        unused: true,
-        if_return: true,
-        join_vars: true,
-        drop_console: true
-      },
-      output: {
-        comments: false,
-      }
-    })*/
-  ],
+  plugins: getPlugins(),
   module: {
     loaders: [
       { test: /\.js$/, loaders: ['babel'], exclude: /node_modules/, include: __dirname },
@@ -44,5 +22,45 @@ module.exports = {
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" }
     ]
+  },
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM"
   }
 }
+
+function getEntry() {
+  let result = []
+  result.push('./index')
+
+  if (isDev)
+    result.push('webpack-hot-middleware/client')
+
+  return result
+}
+
+function getPlugins() {
+  let result = [] 
+
+  if (isProd) {
+    result.push(new webpack.optimize.DedupePlugin())
+    result.push(new webpack.optimize.OccurrenceOrderPlugin())
+    result.push(new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      compress: {
+        warnings: false
+      },
+      output: {
+        comments: false,
+        beautify: false
+      }
+    }))
+  }
+  else {
+    result.push(new webpack.HotModuleReplacementPlugin())
+  }
+
+  return result
+}
+
+module.exports = config

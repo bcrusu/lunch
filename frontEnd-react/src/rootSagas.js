@@ -4,7 +4,7 @@ import profile from './profile'
 import auth from './auth'
 
 function* runInit() {
-  yield put(auth.actions.loadAuthFromStore())
+  yield put(auth.actions.authInit())
 }
 
 export function* watch() {

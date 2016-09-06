@@ -45,7 +45,6 @@ function getEnhancer() {
 function enableHotModuleReloading(store) {
   if (module.hot) {
     // TODO: review hmr - should explicitly include the public/profile reducers also? 
-    // Enable Webpack hot module replacement for reducers
     module.hot.accept('./rootReducer', () => {
       const nextRootReducer = require('./rootReducer').default
       store.replaceReducer(nextRootReducer)
