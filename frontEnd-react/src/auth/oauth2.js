@@ -59,6 +59,7 @@ function pollPopup({ window, config }) {
         const interval = setInterval(() => {
             if (!window || window.closed) {
                 clearInterval(interval);
+                reject({ error: 'User cancelled.' })
             }
             try {
                 const popupUrlPath = window.location.host + window.location.pathname;
@@ -101,6 +102,7 @@ function exchangeCodeForToken({ oauthData, config, window }) {
         })
 }
 
+//TODO: close popup on error (reject)
 function closePopup({ token, window }) {
     return new Promise((resolve, reject) => {
         window.close();

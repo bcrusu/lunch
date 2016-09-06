@@ -1,5 +1,7 @@
 import { createAction } from '../../utils/actionUtils'
 
-export const BEGIN_SIGNIN = 'BEGIN_SIGNIN';
+export const BEGIN_LINKEDIN_SIGNIN = 'BEGIN_LINKEDIN_SIGNIN';
+export const BEGIN_SIGNOUT = 'BEGIN_SIGNOUT';
 
-export const beginSignin = () => createAction(BEGIN_SIGNIN)
+export const beginLinkedinSignin = () => createAction(BEGIN_LINKEDIN_SIGNIN)
+export const beginSignout = () => createAction(BEGIN_SIGNOUT)

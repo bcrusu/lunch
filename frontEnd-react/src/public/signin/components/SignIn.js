@@ -1,34 +1,53 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import * as authService from '../../../auth/authService'
+import * as actions from '../actions'
 
 class SignIn extends Component {
   constructor(props) {
     super(props)
   }
 
-  componentWillMount() {
+  renderLinkedinSignin() {
+    if (this.props.isAuthenticated)
+      return null
 
+    return (
+      <button className="btn btn-md btn-block btn-linkedin" onClick={this.props.handleLinkedinSignin}>
+        <i className="ion-social-linkedin"></i> Sign in with LinkedIn
+      </button>
+    )
   }
 
-  testSignin() {
-    authService.signin(authService.NETWORKS.linkedin)
-      .then(token => { console.log('success: ' + token) },
-      error => { console.log('error: ' + error) })
+  renderSignout() {
+    if (!this.props.isAuthenticated)
+      return null
+
+    return (
+      <button className="btn btn-block btn-default" onClick={this.props.handleSignout}>
+        Sign out
+      </button>
+    )
   }
 
   render() {
     return (
       <div>
-        <button className="btn btn-md btn-block btn-linkedin" onClick={this.testSignin}>
-          <i className="ion-social-linkedin"></i> Sign in with LinkedIn
-        </button>
+        {this.renderLinkedinSignin() }
+        {this.renderSignout() }
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  }
 }
 
-export default connect()(SignIn)
+const mapDispatchToProps = {
+  handleLinkedinSignin: actions.beginLinkedinSignin,
+  handleSignout: actions.beginSignout
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
