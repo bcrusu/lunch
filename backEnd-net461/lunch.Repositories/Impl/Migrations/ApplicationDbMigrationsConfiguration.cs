@@ -10,7 +10,7 @@ namespace lunch.Repositories.Impl.Migrations
             MigrationsAssembly = typeof(ApplicationDbMigrationsConfiguration).Assembly;
             MigrationsNamespace = typeof(ApplicationDbMigrationsConfiguration).Namespace;
 
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(ApplicationDbContext context)
