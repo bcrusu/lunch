@@ -3,25 +3,34 @@ import { push } from 'react-router-redux'
 import * as actions from './actions'
 import auth from '../../auth'
 
-function* watchLinkedinSignin() {
+function* watchSignin() {
     while (true) {
-        yield take(actions.BEGIN_LINKEDIN_SIGNIN)
-        yield fork(auth.sagas.signinLinkedin)
+        console.log('waiting for begin signin')
+        let action = yield take(actions.BEGIN_SIGNIN)
+        yield fork(auth.sagas.signin, action.network)
 
-        //TODO: redirect to profile page
+        action = yield take([auth.actions.AUTH_SIGNIN_SUCCESS, auth.actions.AUTH_SIGNIN_FAILURE])
+        console.log('auth result: ' + action)
+
+
+        if (action.type === auth.actions.AUTH_SIGNIN_SUCCESS) {
+            yield put(push('/profile'))
+        }
     }
-}   
+}
 
 function* watchSignout() {
     while (true) {
         yield take(actions.BEGIN_SIGNOUT)
         yield put(auth.actions.authSignout())
+
+        yield put(push('/'))
     }
 }
 
 export function* watch() {
     yield [
-        fork(watchLinkedinSignin),
+        fork(watchSignin),
         fork(watchSignout)
     ]
 }

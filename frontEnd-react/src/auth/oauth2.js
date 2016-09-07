@@ -16,7 +16,6 @@ export function linkedinSignin() {
         .then(openPopup)
         .then(pollPopup)
         .then(exchangeCodeForToken)
-        .then(closePopup)
 }
 
 function oauth2(config) {
@@ -74,13 +73,14 @@ function pollPopup({ window, config }) {
                         if (params.error) {
                             reject({ error: params.error })
                         } else {
-                            resolve({ oauthData: params, config, window });
+                            resolve({ oauthData: params, config });
                         }
                     } else {
                         reject({ error: 'OAuth redirect has occurred but no query or hash parameters were found.' })
                     }
 
                     clearInterval(interval)
+                    window.close();
                 }
             } catch (error) {
                 // Ignore DOMException: Blocked a frame with origin from accessing a cross-origin frame.
@@ -90,7 +90,7 @@ function pollPopup({ window, config }) {
     });
 }
 
-function exchangeCodeForToken({ oauthData, config, window }) {
+function exchangeCodeForToken({ oauthData, config }) {
     const data = {
         code: oauthData.code,
         redirectUri: config.redirectUri
@@ -98,14 +98,6 @@ function exchangeCodeForToken({ oauthData, config, window }) {
 
     return config.apiFunction(data)
         .then(json => {
-            return { token: json.token, window }
+            return { token: json.token }
         })
-}
-
-//TODO: close popup on error (reject)
-function closePopup({ token, window }) {
-    return new Promise((resolve, reject) => {
-        window.close();
-        resolve(token);
-    });
 }

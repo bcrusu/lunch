@@ -10,7 +10,7 @@ export default () => (
       </button>
       <a className="navbar-brand" href="#/app">
         <i className="fa fa-home"></i>
-        <span>TODO: get title from current route</span>
+        <span>Welcome</span>
       </a>
     </div>
 

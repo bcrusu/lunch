@@ -1,7 +1,10 @@
 import { createAction } from '../../utils/actionUtils'
+import auth from '../../auth'
 
-export const BEGIN_LINKEDIN_SIGNIN = 'BEGIN_LINKEDIN_SIGNIN';
+export const BEGIN_SIGNIN = 'BEGIN_SIGNIN';
 export const BEGIN_SIGNOUT = 'BEGIN_SIGNOUT';
 
-export const beginLinkedinSignin = () => createAction(BEGIN_LINKEDIN_SIGNIN)
+export const beginSignin = network => createAction(BEGIN_SIGNIN, { network })
+export const beginLinkedinSignin = () => beginSignin(auth.authService.NETWORKS.linkedin)
+
 export const beginSignout = () => createAction(BEGIN_SIGNOUT)
