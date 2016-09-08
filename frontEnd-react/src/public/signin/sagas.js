@@ -11,7 +11,7 @@ function* watchSignin() {
         action = yield take([auth.actions.AUTH_SIGNIN_SUCCESS, auth.actions.AUTH_SIGNIN_FAILURE])
 
         if (action.type === auth.actions.AUTH_SIGNIN_SUCCESS) {
-            yield put(push('/profile'))
+            yield put(push('/profile/welcome'))
         }
         else {
             //TODO: notify user 

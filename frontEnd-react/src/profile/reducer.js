@@ -1,7 +1,3 @@
-import { combineReducers } from 'redux'
-
-const reducer = combineReducers({
-  
-})
-
-export default reducer
+export default function (state = {}, action) {
+    return state
+}

@@ -1,7 +1,12 @@
-const initialState = {
-    data: {}  //cached API data
-};
+import { combineReducers } from 'redux'
+import * as actions from './actions'
+import cache from './cache'
 
-export default function (state = initialState, action) {
-    return state; //TODO
+export default combineReducers({
+    api: apiReducer,
+    [cache.NAME]: cache.reducer
+})
+
+function apiReducer(state = {}, action) {
+    return state
 }
