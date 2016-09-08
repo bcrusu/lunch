@@ -98,6 +98,6 @@ function exchangeCodeForToken({ oauthData, config }) {
 
     return config.apiFunction(data)
         .then(json => {
-            return { token: json.token }
+            return json.token
         })
 }

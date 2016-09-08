@@ -5,26 +5,33 @@ import auth from '../../auth'
 
 function* watchSignin() {
     while (true) {
-        console.log('waiting for begin signin')
         let action = yield take(actions.BEGIN_SIGNIN)
+
         yield fork(auth.sagas.signin, action.network)
-
         action = yield take([auth.actions.AUTH_SIGNIN_SUCCESS, auth.actions.AUTH_SIGNIN_FAILURE])
-        console.log('auth result: ' + action)
-
 
         if (action.type === auth.actions.AUTH_SIGNIN_SUCCESS) {
             yield put(push('/profile'))
+        }
+        else {
+            //TODO: notify user 
         }
     }
 }
 
 function* watchSignout() {
     while (true) {
-        yield take(actions.BEGIN_SIGNOUT)
-        yield put(auth.actions.authSignout())
+        let action = yield take(actions.BEGIN_SIGNOUT)
 
-        yield put(push('/'))
+        yield fork(auth.sagas.signout)
+        action = yield take([auth.actions.AUTH_SIGNOUT_SUCCESS, auth.actions.AUTH_SIGNOUT_FAILURE])
+
+        if (action.type === auth.actions.AUTH_SIGNOUT_SUCCESS) {
+            yield put(push('/'))
+        }
+        else {
+            //TODO: notify user 
+        }
     }
 }
 

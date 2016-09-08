@@ -13,8 +13,8 @@ function getFetchInitObject(method, body = undefined) {
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
 
-    if (auth.authService.isAuthenticated()) {
-        let token = auth.authService.getAuthToken();
+    if (auth.tokenStore.hasToken()) {
+        let token = auth.tokenStore.getToken();
         headers.append("Authorization", `Bearer ${token}`);
     }
 
@@ -45,14 +45,17 @@ export function apiFetch(endpoint, method, body = undefined) {
             }
 
             return Promise.resolve(response)
+        },
+        error => {
+            const message = error.message || 'API call failed.'
+            return Promise.reject({ error: message })
         })
-        .then(response => response, error => ({ error: error.message || 'API call failed.' }))
 }
 
 function apiFetchJson(endpoint, method, body = undefined) {
     return apiFetch(endpoint, method, body)
         .then(response => {
-            return response.json()
+            return response.json().then(json => json, error => ({}))  //parse json and ignore empty body by returning {}
         })
 }
 

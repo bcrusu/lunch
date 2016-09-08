@@ -1,25 +1,27 @@
 import { createAction } from '../utils/actionUtils'
-import * as authService from './authService'
 
 export const AUTH_INIT = 'AUTH_INIT';
 export const AUTH_SIGNIN_SUCCESS = 'AUTH_SIGNIN_SUCCESS';
 export const AUTH_SIGNIN_FAILURE = 'AUTH_SIGNIN_FAILURE';
-export const AUTH_SIGNOUT = 'AUTH_SIGNOUT';
+export const AUTH_SIGNOUT_SUCCESS = 'AUTH_SIGNOUT_SUCCESS';
+export const AUTH_SIGNOUT_FAILURE = 'AUTH_SIGNOUT_FAILURE';
 
-export const authInit = () => {
-    const isAuthenticated = authService.isAuthenticated()
+export const init = isAuthenticated => {
     return createAction(AUTH_INIT, { isAuthenticated })
 }
 
-export const authSigninSuccess = () => {
+export const signinSuccess = () => {
     return createAction(AUTH_SIGNIN_SUCCESS)
 }
 
-export const authSigninFailure = error => {
-    return createAction(AUTH_SIGNIN_FAILURE, error)
+export const signinFailure = error => {
+    return createAction(AUTH_SIGNIN_FAILURE, { error })
 }
 
-export const authSignout = () => {
-    authService.signout()
-    return createAction(AUTH_SIGNOUT)
+export const signoutSuccess = () => {
+    return createAction(AUTH_SIGNOUT_SUCCESS)
+}
+
+export const signoutFailure = error => {
+    return createAction(AUTH_SIGNOUT_FAILURE, { error })
 }

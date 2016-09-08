@@ -1,12 +1,12 @@
 import { createAction } from '../utils/actionUtils'
 
-const REQUEST = 'REQUESTING'
+const REQUEST = 'REQUEST'
 const SUCCESS = 'SUCCESS'
 const FAILURE = 'FAILURE'
 
 function createApiRequestTypes(base) {
     const res = {};
-    [REQUEST, SUCCESS, FAILURE].forEach(type => res[type] = `${base}_${type}`)
+    [REQUEST, SUCCESS, FAILURE].forEach(type => res[type] = `API_${base}_${type}`)
     return res;
 }
 
