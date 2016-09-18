@@ -9,7 +9,7 @@ namespace lunch.Repositories.Migrations
 {
     internal class ApplicationDbContextFactory : IDbContextFactory<ApplicationDbContext>
     {
-        public ApplicationDbContext Create()
+        public ApplicationDbContext Create(DbContextFactoryOptions options)
         {
             var serviceProvider = GetServiceProvider();
 

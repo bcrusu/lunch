@@ -5,14 +5,14 @@
     "lunch.Common": "1.0.0-*",
     "lunch.Domain": "1.0.0-*",
     "lunch.Repositories": "1.0.0-*",
-    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc2-final",
-    "Microsoft.IdentityModel.Tokens": "5.0.0-rc2-305061149",
-    "NETStandard.Library": "1.5.0-rc2-24027",
-    "System.IdentityModel.Tokens.Jwt": "5.0.0-rc2-305061149"
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+    "Microsoft.IdentityModel.Tokens": "5.0.0",
+    "NETStandard.Library": "1.6.0",
+    "System.IdentityModel.Tokens.Jwt": "5.0.0"
   },
 
   "frameworks": {
-    "netstandard1.5": {
+    "netstandard1.6": {
       "imports": [
         "dnxcore50",
         "portable-net45+win8+wp8"
